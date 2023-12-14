@@ -1,0 +1,204 @@
+apiVersion: v1
+entries:
+  aria2-pro:
+  - apiVersion: v2
+    appVersion: "202209060423"
+    created: "2023-12-14T06:30:57.173475627Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: A perfect Aria2 Docker image. Out of the box, just add download tasks
+      and don't need to think about anything else.
+    digest: 4062007ca93221bb5484305e13019260723bf535340d172b025e005ad60e1a05
+    home: https://github.com/brandan-schmitz/helm-charts/aria2-pro
+    icon: file://icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: aria2-pro
+    sources:
+    - https://github.com/P3TERX/Aria2-Pro-Docker
+    - https://github.com/aria2/aria2
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/aria2-pro-1.1.1/aria2-pro-1.1.1.tgz
+    version: 1.1.1
+  flaresolverr:
+  - apiVersion: v2
+    appVersion: 3.3.2
+    created: "2023-12-14T06:30:57.372101087Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: FlareSolverr is a proxy server to bypass Cloudflare and DDoS-GUARD
+      protection.
+    digest: d73858576569fff0500fdf64c0ec5d95d05e34ef979d213dc7e42cca40ad0606
+    home: https://github.com/brandan-schmitz/helm-charts/flaresolverr
+    icon: file://icon.svg
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: flaresolverr
+    sources:
+    - https://github.com/FlareSolverr/FlareSolverr
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/flaresolverr-1.2.0/flaresolverr-1.2.0.tgz
+    version: 1.2.0
+  overseerr:
+  - apiVersion: v2
+    appVersion: 1.33.2
+    created: "2023-12-14T06:30:57.547566931Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: Overseerr is a request management and media discovery tool built
+      to work with your existing Plex ecosystem.
+    digest: 7f22ffc72b57d48ca922761b3199aa63b6cb7b7ae310e62e6f983c23fdc19f90
+    home: https://github.com/brandan-schmitz/helm-charts/charts/overseerr
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: overseerr
+    sources:
+    - https://github.com/linuxserver/docker-overseerr
+    - https://github.com/sct/overseerr
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/overseerr-1.2.2/overseerr-1.2.2.tgz
+    version: 1.2.2
+  plex:
+  - apiVersion: v2
+    appVersion: 1.32.8
+    created: "2023-12-14T06:30:57.740993811Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: Plex organizes video, music and photos from personal media libraries
+      and streams them to smart TVs, streaming boxes and mobile devices. This container
+      is packaged as a standalone Plex Media Server. has always been a top priority.
+      Straightforward design and bulk actions mean getting things done faster.
+    digest: 330017810321b68fe755f96cbce7300e58262e3ed8621b9d75206e303677b106
+    home: https://github.com/brandan-schmitz/helm-charts/charts/plex
+    icon: file://icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: plex
+    sources:
+    - https://github.com/linuxserver/docker-plex
+    - https://plex.tv
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/plex-1.1.4/plex-1.1.4.tgz
+    version: 1.1.4
+  prowlarr:
+  - apiVersion: v2
+    appVersion: 1.10.5.4116
+    created: "2023-12-14T06:30:57.926817833Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: Prowlarr is a indexer manager/proxy built on the popular arr .net/reactjs
+      base stack to integrate with your various PVR apps.
+    digest: 8364778110af03f2e505f432e438758e6809f76c644ab0a388cdf35b9eb124b9
+    home: https://github.com/brandan-schmitz/helm-charts/charts/prowlarr
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: prowlarr
+    sources:
+    - https://github.com/linuxserver/docker-prowlarr
+    - https://github.com/Prowlarr/Prowlarr
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/prowlarr-1.5.0/prowlarr-1.5.0.tgz
+    version: 1.5.0
+  qbittorrent:
+  - apiVersion: v2
+    appVersion: 4.5.4
+    created: "2023-12-14T06:30:58.122845457Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: The Qbittorrent project aims to provide an open-source software alternative
+      to µTorrent. qBittorrent is based on the Qt toolkit and libtorrent-rasterbar
+      library.
+    digest: 4b7abc70d5a106a98eb898e8c0d04663a98a37cd3df70a4df4606091d936f418
+    home: https://github.com/brandan-schmitz/helm-charts/charts/qbittorrent
+    icon: file://icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: qbittorrent
+    sources:
+    - https://github.com/linuxserver/docker-qbittorrent
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/qbittorrent-1.0.0/qbittorrent-1.0.0.tgz
+    version: 1.0.0
+  radarr:
+  - apiVersion: v2
+    appVersion: 5.1.3.8246
+    created: "2023-12-14T06:30:58.308570398Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: A fork of Sonarr to work with movies à la Couchpotato.
+    digest: 40568d7fb5f6468e1fe385931b7f84dd3fcc5640f6f91fc095746ea8835093d6
+    home: https://github.com/brandan-schmitz/helm-charts/charts/radarr
+    icon: file://icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: radarr
+    sources:
+    - https://github.com/linuxserver/docker-radarr
+    - https://github.com/Radarr/Radarr
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/radarr-2.1.0/radarr-2.1.0.tgz
+    version: 2.1.0
+  sonarr:
+  - apiVersion: v2
+    appVersion: 3.0.10.1567
+    created: "2023-12-14T06:30:58.493483585Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: Sonarr (formerly NZBdrone) is a PVR for usenet and bittorrent users.
+      It can monitor multiple RSS feeds for new episodes of your favorite shows and
+      will grab, sort and rename them. It can also be configured to automatically
+      upgrade the quality of files already downloaded when a better quality format
+      becomes available.
+    digest: 75cb53b31a1838d56981020ff37fe19e158758eaa9084bdc8765e70649bd6a4d
+    home: https://github.com/brandan-schmitz/helm-charts/charts/sonarr
+    icon: file://icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: sonarr
+    sources:
+    - https://github.com/linuxserver/docker-sonarr
+    - https://github.com/Sonarr/Sonarr
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/sonarr-1.1.1/sonarr-1.1.1.tgz
+    version: 1.1.1
+generated: "2023-12-14T06:30:58.493495036Z"
