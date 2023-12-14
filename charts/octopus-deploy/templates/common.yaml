@@ -17,6 +17,8 @@ controllers:
               subPath: import
             - path: /cache
               subPath: cache
+            - path: /home/octopus/.octopus/OctopusServer/Server/Logs
+              subPath: server-logs
           accessMode: "{{ .Values.octopus.storage.individual.accessMode }}"
           size: "{{ .Values.octopus.storage.individual.size }}"
           storageClass: "{{ .Values.octopus.storage.individual.storageClass }}"
@@ -26,6 +28,7 @@ controllers:
 {{- $_ := mergeOverwrite .Values (include "octopus-deploy.volumeClaimTemplates" . | fromYaml) -}}
 {{- $_ := mergeOverwrite .Values.service.main .Values.octopus.service -}}
 {{- $_ := mergeOverwrite .Values.controllers.main.containers.main.probes .Values.octopus.probes -}}
+{{- $_ := mergeOverwrite .Values.ingress.main .Values.octopus.ingress -}}
 
 {{- define "octopus-deploy.hardcodedValues" -}}
 global:
@@ -33,13 +36,28 @@ global:
 controllers:
   main:
     type: statefulset
+    {{- if gt (int .Values.octopus.statefulset.replicas) 1 }}
+    pod:
+      # affinity:
+      #   podAntiAffinity:
+      #     preferredDuringSchedulingIgnoredDuringExecution:
+      #     - weight: 100
+      #         podAffinityTerm:
+      #         labelSelector:
+      #             matchExpressions:
+      #             - key: app
+      #                 operator: In
+      #                 values:
+      #                 - octopus
+      #         topologyKey: kubernetes.io/hostname
+    {{- end }}
     containers:
       main:
         image:
           tag: {{ .Values.octopus.image.tag | default .Chart.AppVersion }}
         env:
           - name: ACCEPT_EULA
-            value: {{ .Values.settings.acceptEula | quote}}
+            value: {{ if .Values.settings.acceptEula }}"Y"{{ else }}"N"{{ end }}
           - name: OCTOPUS_SERVER_NODE_NAME
             valueFrom:
               fieldRef:
@@ -107,6 +125,25 @@ controllers:
                   - /bin/bash
                   - -c
                   - URL=http://localhost:8080; response=$(/usr/bin/curl -k $URL/api/octopusservernodes/ping --write-out %{http_code} --silent --output /dev/null); /usr/bin/test "$response" -ge 200 && /usr/bin/test "$response" -le 299 || /usr/bin/test "$response" -eq 418
+        {{- if .Values.settings.enableDockerInDocker }}
+        securityContext:
+          privileged: true
+        {{- end }}
+        {{- if gt (int .Values.octopus.statefulset.replicas) 1 }} 
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - /bin/bash
+              - -c
+              - '[[ -f /Octopus/Octopus.Server ]] && EXE="/Octopus/Octopus.Server" || EXE="dotnet /Octopus/Octopus.Server.dll"; $EXE node --instance=OctopusServer --drain=true --wait=600 --cancel-tasks;'
+          postStart:
+            exec:
+              command:
+              - /bin/bash
+              - -c
+              - 'URL=http://localhost:8080; x=0; while [ $x -lt 9 ]; do response=$(/usr/bin/curl -k $URL/api/octopusservernodes/ping --write-out %{http_code} --silent --output /dev/null); if [ "$response" -ge 200 ] && [ "$response" -le 299 ]; then break; fi; if [ "$response" -eq 418 ]; then [[ -f /Octopus/Octopus.Server ]] && EXE="/Octopus/Octopus.Server" || EXE="dotnet /Octopus/Octopus.Server.dll"; $EXE node --instance=OctopusServer --drain=false; now=$(date); echo "${now} Server cancelling drain mode." break; fi; now=$(date); echo "${now} Server is not ready, can not disable drain mode."; sleep 30; done;'
+        {{- end }}
 {{- if not .Values.settings.existingSecret }}
 secrets:
   config:
@@ -128,19 +165,12 @@ service:
     controller: main
     ports:
       http:
-        enabled: true
         primary: true
-        port: 8080
+        targetPort: 8080
         protocol: HTTP
-      https:
-        enabled: true
-        primary: false
-        port: 443
-        protocol: HTTPS
       polling:
-        enabled: true
         primary: false
-        port: 10943
+        targetPort: 10943
         protocol: TCP
 
 persistence:
@@ -162,9 +192,11 @@ persistence:
             subPath: taskLogs
           - path: /eventExports
             subPath: eventExports
+ingress:
+  main:
+    primary: true
 {{- end -}}
 {{- $_ := mergeOverwrite .Values (include "octopus-deploy.hardcodedValues" . | fromYaml) -}}
-
 
 
 {{/* Render the templates */}}

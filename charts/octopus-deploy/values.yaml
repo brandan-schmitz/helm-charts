@@ -1,7 +1,6 @@
 settings:
-  # -- Accept the [Microsoft SQL Server Eula](https://hub.docker.com/r/microsoft/mssql-server-windows-express/) and the [Octopus Deploy Eula](https://octopus.com/company/legal)
-  # Valid values are Y or N
-  acceptEula: "n"
+  # -- Do you accept the [Microsoft SQL Server Eula](https://hub.docker.com/r/microsoft/mssql-server-windows-express/) and the [Octopus Deploy Eula](https://octopus.com/company/legal)?
+  acceptEula: false
   # -- If this is defined, this chart will pull the below settings from the secret defined.
   # This is useful if upgrading from previous deployments.
   existingSecret:
@@ -23,6 +22,8 @@ settings:
   adminPassword: "DefaultPassword*1234"
   # -- The license key to use for Octopus Deploy. If this is left blank then it will automatically attempt to create a free license key.
   licenseKey:
+  # -- Docker-In-Docker is used to support worker container images.
+  # WARNING: Enabling this forces the Octopus Deploy container to run in privileged mode.
   enableDockerInDocker: false
 
 octopus:
@@ -118,6 +119,17 @@ octopus:
     labels: {}
     # -- Allow adding additional match labels
     extraSelectorLabels: {}
+    ports:
+      http:
+        # -- Enable or disable the HTTP port for octopus-deploy
+        enabled: true
+        # -- Set the port number that will be exposed by the service for the HTTP server.
+        port: 8080
+      polling:
+        # -- Enable or disable the tentacle polling port for octopus-deploy
+        enabled: true
+        # -- Set the port number that will be exposed by the service for the tentacle polling server.
+        port: 10943
 
   probes:
     # -- Liveness probe configuration
@@ -159,61 +171,24 @@ octopus:
         timeoutSeconds: 5
         failureThreshold: 30
 
-
-
-
-
-
-
-
-
-# -- Configure the ingresses for the chart here.
-# Additional ingresses can be added by adding a dictionary key similar to the 'main' ingress.
-# @default -- See below
-ingress:
-  main:
+  ingress:
     # -- Enables or disables the ingress
     enabled: false
-
-    # -- Make this the primary ingress (used in probes, notes, etc...).
-    # If there is more than 1 ingress, make sure that only 1 ingress is marked as primary.
-    primary: true
-
     # -- Override the name suffix that is used for this ingress.
     nameOverride:
-
     # -- Provide additional annotations which may be required.
     annotations:
       {}
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
-
     # -- Provide additional labels which may be required.
     labels: {}
-
     # -- Set the ingressClass that is used for this ingress.
     className: # "nginx"
-
-    # -- Configure the defaultBackend for this ingress. This will disable any other rules for the ingress.
-    defaultBackend:
-
     ## Configure the hosts for the ingress
     hosts:
       - # -- Host address. Helm template can be passed.
         host: chart-example.local
-        ## Configure the paths for the host
-        paths:
-          - # -- Path.  Helm template can be passed.
-            path: /
-            pathType: Prefix
-            service:
-              # -- Overrides the service name reference for this path
-              # This can be an actual service name, or reference a service identifier
-              # from this values.yaml
-              name: main
-              # -- Overrides the service port number reference for this path
-              port:
-
     # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
     tls: []
     #  - secretName: chart-example-tls
