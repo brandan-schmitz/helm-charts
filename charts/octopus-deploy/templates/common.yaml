@@ -1,0 +1,171 @@
+---
+{{- include "bjw-s.common.loader.init" . }}
+
+# Merge in values from specific config sections
+{{- $_ := mergeOverwrite .Values.controllers.main.containers.main.image .Values.octopus.image -}}
+{{- $_ := mergeOverwrite .Values.controllers.main .Values.octopus.statefulset -}}
+{{- $_ := mergeOverwrite .Values.controllers.main.containers.main.resources .Values.octopus.resources -}}
+{{- define "octopus-deploy.volumeClaimTemplates" -}}
+{{- if .Values.octopus.storage.individual.enabled }}
+controllers:
+  main:
+    statefulset:
+      volumeClaimTemplates:
+        - name: individual
+          globalMounts:
+            - path: /import
+              subPath: import
+            - path: /cache
+              subPath: cache
+          accessMode: "{{ .Values.octopus.storage.individual.accessMode }}"
+          size: "{{ .Values.octopus.storage.individual.size }}"
+          storageClass: "{{ .Values.octopus.storage.individual.storageClass }}"
+          retain: "{{ .Values.octopus.storage.individual.retain }}"
+{{ end }}
+{{- end }}
+{{- $_ := mergeOverwrite .Values (include "octopus-deploy.volumeClaimTemplates" . | fromYaml) -}}
+{{- $_ := mergeOverwrite .Values.service.main .Values.octopus.service -}}
+{{- $_ := mergeOverwrite .Values.controllers.main.containers.main.probes .Values.octopus.probes -}}
+
+{{- define "octopus-deploy.hardcodedValues" -}}
+global:
+  nameOverride: "{{ .Release.Name }}"
+controllers:
+  main:
+    type: statefulset
+    containers:
+      main:
+        image:
+          tag: {{ .Values.octopus.image.tag | default .Chart.AppVersion }}
+        env:
+          - name: ACCEPT_EULA
+            value: {{ .Values.settings.acceptEula | quote}}
+          - name: OCTOPUS_SERVER_NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: DB_CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: {{ default .Values.settings.existingSecret (printf "%s-config" .Release.Name) }}
+                key: DB_CONNECTION_STRING
+          - name: ADMIN_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ default .Values.settings.existingSecret (printf "%s-config" .Release.Name) }}
+                key: ADMIN_USERNAME
+          - name: ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ default .Values.settings.existingSecret (printf "%s-config" .Release.Name) }}
+                key: ADMIN_PASSWORD
+          - name: ADMIN_EMAIL
+            valueFrom:
+              secretKeyRef:
+                name: {{ default .Values.settings.existingSecret (printf "%s-config" .Release.Name) }}
+                key: ADMIN_EMAIL
+          {{- if .Values.settings.licenseKey }}
+          - name: OCTOPUS_SERVER_BASE64_LICENSE
+            valueFrom:
+              secretKeyRef:
+                name: {{ default .Values.settings.existingSecret (printf "%s-config" .Release.Name) }}
+                key: OCTOPUS_SERVER_BASE64_LICENSE
+          {{- end }}
+          - name: MASTER_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ default .Values.settings.existingSecret (printf "%s-config" .Release.Name) }}
+                key: MASTER_KEY
+          {{- if not .Values.settings.enableDockerInDocker }}
+          - name: DISABLE_DIND
+            value: "Y"
+          {{- end }}
+          - name: OCTOPUS_INSTALLED_VIA_HELM
+            value: "true"
+        probes:
+          liveness:
+            custom: true
+            spec:
+              exec:
+                command:
+                  - /bin/bash
+                  - -c
+                  - URL=http://localhost:8080; response=$(/usr/bin/curl -k $URL/api/octopusservernodes/ping --write-out %{http_code} --silent --output /dev/null); /usr/bin/test "$response" -ge 200 && /usr/bin/test "$response" -le 299 || /usr/bin/test "$response" -eq 418
+          readiness:
+            custom: true
+            spec:
+              exec:
+                command:
+                  - /bin/bash
+                  - -c
+                  - URL=http://localhost:8080; response=$(/usr/bin/curl -k $URL/api/serverstatus/hosted/internal --write-out %{http_code} --silent --output /dev/null); /usr/bin/test "$response" -ge 200 && /usr/bin/test "$response" -le 299 || /usr/bin/test
+          startup:
+            custom: true
+            spec:
+              exec:
+                command:
+                  - /bin/bash
+                  - -c
+                  - URL=http://localhost:8080; response=$(/usr/bin/curl -k $URL/api/octopusservernodes/ping --write-out %{http_code} --silent --output /dev/null); /usr/bin/test "$response" -ge 200 && /usr/bin/test "$response" -le 299 || /usr/bin/test "$response" -eq 418
+{{- if not .Values.settings.existingSecret }}
+secrets:
+  config:
+    enabled: true
+    stringData:
+      DB_CONNECTION_STRING: "Server={{ .Release.Name }}-mssql,1433;Database={{ .Values.settings.databaseName }};User={{ .Values.settings.databaseUser }};Password={{ .Values.settings.databasePassword }}"
+      ADMIN_USERNAME: {{ .Values.settings.adminUsername }}
+      ADMIN_PASSWORD: {{ .Values.settings.adminPassword }}
+      ADMIN_EMAIL: {{ .Values.settings.adminEmail }}
+      {{- if .Values.settings.licenseKey }}
+      OCTOPUS_SERVER_BASE64_LICENSE: {{ .Values.settings.licenseKey | b64enc | quote}}
+      {{- end }}
+      MASTER_KEY: {{ default .Values.settings.masterKey (include "octopus-deploy.generateMasterKey" . ) }}
+      MSSQL_SA_PASSWORD: {{ .Values.settings.databasePassword }}
+{{- end }}
+service:
+  main:
+    primary: true
+    controller: main
+    ports:
+      http:
+        enabled: true
+        primary: true
+        port: 8080
+        protocol: HTTP
+      https:
+        enabled: true
+        primary: false
+        port: 443
+        protocol: HTTPS
+      polling:
+        enabled: true
+        primary: false
+        port: 10943
+        protocol: TCP
+
+persistence:
+  shared:
+    enabled: {{ .Values.octopus.storage.shared.enabled }}
+    storageClass: {{ .Values.octopus.storage.shared.storageClass }}
+    existingClaim: {{ .Values.octopus.storage.shared.existingClaim | default "" }}
+    accessMode: {{ .Values.octopus.storage.shared.accessMode }}
+    size: {{ .Values.octopus.storage.shared.size }}
+    retain: {{ .Values.octopus.storage.shared.retain }}
+    advancedMounts:
+      main:
+        main:
+          - path: /repository
+            subPath: repository
+          - path: /artifacts
+            subPath: artifacts
+          - path: /taskLogs
+            subPath: taskLogs
+          - path: /eventExports
+            subPath: eventExports
+{{- end -}}
+{{- $_ := mergeOverwrite .Values (include "octopus-deploy.hardcodedValues" . | fromYaml) -}}
+
+
+
+{{/* Render the templates */}}
+{{ include "bjw-s.common.loader.generate" . }}
