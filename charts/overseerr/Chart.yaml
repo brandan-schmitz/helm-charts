@@ -1,0 +1,19 @@
+apiVersion: v2
+name: overseerr
+description: Overseerr is a request management and media discovery tool built to work with your existing Plex ecosystem.
+type: application
+kubeVersion: ">=1.24.0-0"
+maintainers:
+  - name: Brandan Schmitz
+    email: brandan.schmitz@celestialdata.net
+dependencies:
+  - name: common
+    repository: https://bjw-s.github.io/helm-charts
+    version: 1.5.1
+home: https://github.com/brandan-schmitz/helm-charts/charts/overseerr
+sources:
+  - https://github.com/linuxserver/docker-overseerr
+  - https://github.com/sct/overseerr
+icon: file://icon.svg
+version: 1.2.2
+appVersion: 1.33.2

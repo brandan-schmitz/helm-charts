@@ -1,0 +1,170 @@
+image:
+  # -- image repository
+  repository: linuxserver/plex
+  # -- image tag
+  tag:
+  # -- image pull policy
+  pullPolicy: Always
+
+
+env:
+  # -- Set the timezone that will be used by the container
+  TZ: America/Chicago
+
+  # -- Set the user ID that the container will run Plex as. This is useful when using
+  # a shared volume with something like Syncthing for file syncing.
+  PUID: '1000'
+
+  # -- Set the group ID that the container will run Plex as. This is useful when using
+  # a shared volume with something like Syncthing for file syncing.
+  PGID: '1000'
+
+  # -- Set the Plex version that the container should pull and use. Valid options are below.
+  # docker, latest, public, or a specific version. Reference https://github.com/linuxserver/docker-plex#application-setup
+  VERSION: docker
+
+  # -- Set the Plex claim token obtained from https://plex.tv/claim
+  PLEX_CLAIM: ""
+
+
+service:
+  main:
+    # -- Enables or disables the service
+    enabled: true
+
+    # -- Set the service type
+    type: ClusterIP
+
+    # -- Specify the externalTrafficPolicy for the service. Options: Cluster, Local
+    # -- [[ref](https://kubernetes.io/docs/tutorials/services/source-ip/)]
+    externalTrafficPolicy:
+
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+
+    # -- Provide additional labels which may be required.
+    labels: {}
+
+    ports:
+      http:
+        # -- The port number
+        port: 32400
+
+        # -- Port protocol.
+        protocol: TCP
+
+        # -- Specify the nodePort value for the LoadBalancer and NodePort service types.
+        # [[ref]](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)
+        nodePort: 32400
+
+
+persistence:
+  # -- Persistence for Plex configuration and cache files.
+  # @default -- See below
+  config:
+    # -- Enables or disables the persistence item
+    enabled: true
+
+    # -- Storage Class for the config volume.
+    # If set to `-`, dynamic provisioning is disabled.
+    # If set to something else, the given storageClass is used.
+    # If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.
+    storageClass: # "-"
+
+    # -- If you want to reuse an existing claim, the name of the existing PVC can be passed here.
+    existingClaim: # your-claim
+
+    # -- AccessMode for the persistent volume.
+    # Make sure to select an access mode that is supported by your storage provider!
+    # [[ref]](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes)
+    accessMode: ReadWriteOnce
+
+    # -- The amount of storage that is requested for the persistent volume.
+    size: 50Gi
+
+    # -- Set to true to retain the PVC upon `helm uninstall`
+    retain: true
+
+  # -- Persistence for Plex media files.
+  # @default -- See below
+  media:
+    # -- Enables or disables the persistence item
+    enabled: true
+
+    # -- Storage Class for the config volume.
+    # If set to `-`, dynamic provisioning is disabled.
+    # If set to something else, the given storageClass is used.
+    # If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.
+    storageClass: # "-"
+
+    # -- If you want to reuse an existing claim, the name of the existing PVC can be passed here.
+    existingClaim: # your-claim
+
+    # -- AccessMode for the persistent volume.
+    # Make sure to select an access mode that is supported by your storage provider!
+    # [[ref]](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes)
+    accessMode: ReadWriteOnce
+
+    # -- The amount of storage that is requested for the persistent volume.
+    size: 1Ti
+
+    # -- Set to true to retain the PVC upon `helm uninstall`
+    retain: true
+
+
+resources:
+  requests:
+    # -- CPU Request amount
+    cpu: 6
+
+    # Memory Request Amount
+    memory: 6Gi
+
+  limits:
+    # -- CPU Limit amount
+    cpu: 12
+
+    # -- Memory Limit amount
+    memory: 12Gi
+
+
+# @ignored
+probes:
+  liveness:
+    enabled: true
+    custom: true
+    spec:
+      httpGet:
+        scheme: HTTP
+        path: /identity
+        port: 32400
+      initialDelaySeconds: 240
+      timeoutSeconds: 10
+      periodSeconds: 10
+      successThreshold: 1
+      failureThreshold: 3
+  readiness:
+    enabled: true
+    custom: true
+    spec:
+      httpGet:
+        scheme: HTTP
+        path: /identity
+        port: 32400
+      initialDelaySeconds: 30
+      timeoutSeconds: 10
+      periodSeconds: 10
+      successThreshold: 1
+      failureThreshold: 30
+  startup:
+    enabled: false
+    custom: true
+    spec:
+      httpGet:
+        scheme: HTTP
+        path: /identity
+        port: 32400
+      initialDelaySeconds: 0
+      timeoutSeconds: 1
+      periodSeconds: 5
+      failureThreshold: 30

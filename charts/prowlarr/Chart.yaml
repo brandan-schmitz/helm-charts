@@ -1,0 +1,19 @@
+apiVersion: v2
+name: prowlarr
+description: Prowlarr is a indexer manager/proxy built on the popular arr .net/reactjs base stack to integrate with your various PVR apps.
+type: application
+kubeVersion: ">=1.24.0-0"
+maintainers:
+  - name: Brandan Schmitz
+    email: brandan.schmitz@celestialdata.net
+dependencies:
+  - name: common
+    repository: https://bjw-s.github.io/helm-charts
+    version: 1.5.1
+home: https://github.com/brandan-schmitz/helm-charts/charts/prowlarr
+sources:
+  - https://github.com/linuxserver/docker-prowlarr
+  - https://github.com/Prowlarr/Prowlarr
+icon: file://icon.svg
+version: 1.5.0
+appVersion: 1.10.5.4116

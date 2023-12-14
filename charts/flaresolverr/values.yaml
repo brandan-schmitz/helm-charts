@@ -1,0 +1,94 @@
+image:
+  # -- image repository
+  repository: flaresolverr/flaresolverr
+  # -- image tag
+  tag:
+  # -- image pull policy
+  pullPolicy: IfNotPresent
+
+
+env:
+  # -- Set the timezone that will be used by the container
+  TZ: America/Chicago
+
+
+service:
+  main:
+    # -- Enables or disables the service
+    enabled: true
+
+    # -- Set the service type
+    type: ClusterIP
+
+    # -- Specify the externalTrafficPolicy for the service. Options: Cluster, Local
+    # -- [[ref](https://kubernetes.io/docs/tutorials/services/source-ip/)]
+    externalTrafficPolicy:
+
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+
+    # -- Provide additional labels which may be required.
+    labels: {}
+
+    ports:
+      http:
+        # -- The port number
+        port: 8191
+
+
+resources:
+  requests:
+    # -- CPU Request amount
+    cpu: 100m
+
+    # Memory Request Amount
+    memory: 128Mi
+
+  limits:
+    # -- CPU Limit amount
+    cpu: 250m
+
+    # -- Memory Limit amount
+    memory: 512Mi
+
+
+# @ignored
+probes:
+  liveness:
+    enabled: true
+    custom: true
+    spec:
+      httpGet:
+        scheme: HTTP
+        path: /health
+        port: 8191
+      initialDelaySeconds: 240
+      timeoutSeconds: 10
+      periodSeconds: 10
+      successThreshold: 1
+      failureThreshold: 3
+  readiness:
+    enabled: true
+    custom: true
+    spec:
+      httpGet:
+        scheme: HTTP
+        path: /health
+        port: 8191
+      initialDelaySeconds: 30
+      timeoutSeconds: 10
+      periodSeconds: 10
+      successThreshold: 1
+      failureThreshold: 30
+  startup:
+    enabled: false
+    custom: true
+    spec:
+      httpGet:
+        scheme: HTTP
+        path: /health
+        port: 8191
+      initialDelaySeconds: 0
+      timeoutSeconds: 1
+      periodSeconds: 5
+      failureThreshold: 30

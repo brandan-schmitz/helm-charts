@@ -1,0 +1,44 @@
+name: Release Charts
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+
+      - name: Install Helm Docs
+        run: |
+          cd /tmp
+          wget https://github.com/norwoodj/helm-docs/releases/download/v1.11.3/helm-docs_1.11.3_Linux_x86_64.tar.gz
+          tar -xvf helm-docs_1.11.3_Linux_x86_64.tar.gz
+          sudo mv helm-docs /usr/local/sbin
+
+      - name: Generate Helm Docs
+        shell: bash
+        run: |
+          helm-docs --chart-search-root=charts --template-files=../_templates.gotmpl --template-files=READEME.md.gotmpl --sort-values-order=file
+
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_OWNER: "brandan-schmitz"
+          CR_REPO: "helm-charts"

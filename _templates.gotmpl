@@ -1,0 +1,26 @@
+{{ template "chart.header" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+{{ template "chart.description" . }}
+
+<br>
+
+{{ template "chart.sourcesSection" . }}
+
+<br>
+
+## Installing the Chart
+
+To install the chart with the release name `{{ template "chart.name" . }}`:
+
+```console
+$ helm repo add brandan-schmitz http://brandan-schmitz.github.io/helm-charts
+$ helm install {{ template "chart.name" . }} brandan-schmitz/{{ template "chart.name" . }}
+```
+
+<br>
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "helm-docs.versionFooter" . }}

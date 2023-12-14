@@ -1,0 +1,18 @@
+apiVersion: v2
+name: qbittorrent
+description: The Qbittorrent project aims to provide an open-source software alternative to µTorrent. qBittorrent is based on the Qt toolkit and libtorrent-rasterbar library.
+type: application
+kubeVersion: ">=1.24.0-0"
+maintainers:
+  - name: Brandan Schmitz
+    email: brandan.schmitz@celestialdata.net
+dependencies:
+  - name: common
+    repository: https://bjw-s.github.io/helm-charts
+    version: 1.5.1
+home: https://github.com/brandan-schmitz/helm-charts/charts/qbittorrent
+sources:
+  - https://github.com/linuxserver/docker-qbittorrent
+icon: file://icon.png
+version: 1.0.0
+appVersion: 4.5.4

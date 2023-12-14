@@ -1,0 +1,157 @@
+image:
+  # -- image repository
+  repository: p3terx/aria2-pro
+  # -- image tag
+  tag:
+  # -- image pull policy
+  pullPolicy: IfNotPresent
+
+# -- The UI for this application is attached as a sidecar
+# @ignored
+sidecars:
+  ariang:
+    image: p3terx/ariang:latest
+    imagePullPolicy: Always
+
+env:
+  # -- Set the timezone that will be used by the container
+  TZ: America/Chicago
+
+  # -- Set the user ID that the container will run as
+  PUID: '1000'
+
+  # -- Set the group ID that the container will as
+  PGID: '1000'
+
+  # -- The default umask to set for the container
+  UMASK_SET: 022
+
+  # -- Set the secret that is used for RPC communication to Aira2
+  RPC_SECRET:
+
+  # -- Set the port that Aria2 listens on for RPC communications
+  RPC_PORT: 6800
+
+  # -- Enable or disable the updating of common torrent trackers for torrent downloads
+  UPDATE_TRACKERS: false
+
+
+service:
+  main:
+    # -- Enables or disables the service
+    enabled: true
+
+    # -- Set the service type
+    type: ClusterIP
+
+    # -- Specify the externalTrafficPolicy for the service. Options: Cluster, Local
+    # -- [[ref](https://kubernetes.io/docs/tutorials/services/source-ip/)]
+    externalTrafficPolicy:
+
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+
+    # -- Provide additional labels which may be required.
+    labels: {}
+
+    ports:
+      # -- Configure the port for the AriaNG Interface
+      # @default -- See below
+      http:
+        # -- The port number
+        port: 80
+
+        # -- Port protocol.
+        protocol: HTTP
+
+        # -- Specify the nodePort value for the LoadBalancer and NodePort service types.
+        # [[ref]](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)
+        nodePort: 80
+
+        # -- Specify a service targetPort if you wish to differ the service port from the application port.
+        # If `targetPort` is specified, this port number is used in the container definition instead of
+        # the `port` value. Therefore named ports are not supported for this field.
+        targetPort: 6880
+
+      # -- Configure the port for the Aria2 RPC communications
+      # @default -- See below
+      rpc:
+        # -- The port number
+        port: 6800
+
+        # -- Port protocol.
+        protocol: TCP
+
+        # -- Specify the nodePort value for the LoadBalancer and NodePort service types.
+        # [[ref]](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)
+        nodePort: 6800
+
+
+persistence:
+  # -- Persistence for Aria2 and AriaNG configuration files.
+  # @default -- See below
+  config:
+    # -- Enables or disables the persistence item
+    enabled: true
+
+    # -- Storage Class for the config volume.
+    # If set to `-`, dynamic provisioning is disabled.
+    # If set to something else, the given storageClass is used.
+    # If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.
+    storageClass: # "-"
+
+    # -- If you want to reuse an existing claim, the name of the existing PVC can be passed here.
+    existingClaim: # your-claim
+
+    # -- AccessMode for the persistent volume.
+    # Make sure to select an access mode that is supported by your storage provider!
+    # [[ref]](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes)
+    accessMode: ReadWriteOnce
+
+    # -- The amount of storage that is requested for the persistent volume.
+    size: 1Gi
+
+    # -- Set to true to retain the PVC upon `helm uninstall`
+    retain: true
+
+  # -- Persistence for downloaded data
+  # @default -- See below
+  data:
+    # -- Enables or disables the persistence item
+    enabled: true
+
+    # -- Storage Class for the config volume.
+    # If set to `-`, dynamic provisioning is disabled.
+    # If set to something else, the given storageClass is used.
+    # If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.
+    storageClass: # "-"
+
+    # -- If you want to reuse an existing claim, the name of the existing PVC can be passed here.
+    existingClaim: # your-claim
+
+    # -- AccessMode for the persistent volume.
+    # Make sure to select an access mode that is supported by your storage provider!
+    # [[ref]](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes)
+    accessMode: ReadWriteOnce
+
+    # -- The amount of storage that is requested for the persistent volume.
+    size: 1Ti
+
+    # -- Set to true to retain the PVC upon `helm uninstall`
+    retain: true
+
+
+resources:
+  requests:
+    # -- CPU Request amount
+    cpu: 500m
+
+    # Memory Request Amount
+    memory: 1Gi
+
+  limits:
+    # -- CPU Limit amount
+    cpu: 4000m
+
+    # -- Memory Limit amount
+    memory: 8Gi
