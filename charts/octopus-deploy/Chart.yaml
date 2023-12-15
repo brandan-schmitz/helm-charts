@@ -16,4 +16,4 @@ sources:
   - https://mcr.microsoft.com/en-us/product/mssql/server/
 icon: file://icon.png
 version: 1.0.0
-appVersion: "2023.4.8154"
+appVersion: "2023.4.8166"
