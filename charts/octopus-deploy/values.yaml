@@ -1,0 +1,306 @@
+settings:
+  # -- If this is defined, this chart will pull the below settings from the secret defined.
+  # This is useful if upgrading from previous deployments.
+  existingSecret:
+  # -- Set to true to retain the secret containing the config upon "helm uninstall"
+  retain: false
+  # -- Do you accept the [Microsoft SQL Server Eula](https://hub.docker.com/r/microsoft/mssql-server-windows-express/) and the [Octopus Deploy Eula](https://octopus.com/company/legal)?
+  acceptEula: false
+  # -- The name of the database to use for Octopus
+  databaseName: "OctopusDeploy"
+  # -- The username for the database server and what Octopus will use to connect to the database. If using the built in database to this chart this must be "sa".
+  databaseUser: "sa"
+  # -- The password for the database server and what Octopus will use to connect to the database
+  databasePassword: "thispasswordshouldbechanged"
+  # Octopus Deploy uses a master key for encryption of your databse. If you're using an external database that's already been setup for Octopus Deploy, you can supply the master key to use it.
+  # If left blank, a new master key will be generated for you.
+  # Create a new master key with the command: openssl rand 16 | base64
+  masterKey:
+  # -- The email address to associate with the first admin user for Octopus Deploy
+  adminEmail: ""
+  # -- The username to associate with the first admin user for Octopus Deploy
+  adminUsername: "admin"
+  # -- The password to associate with the first admin user for Octopus Deploy
+  adminPassword: "DefaultPassword*1234"
+  # -- The license key to use for Octopus Deploy. If this is left blank then it will automatically attempt to create a free license key.
+  licenseKey:
+  # -- Docker-In-Docker is used to support worker container images.
+  # WARNING: Enabling this forces the Octopus Deploy container to run in privileged mode.
+  enableDockerInDocker: false
+
+octopus:
+  image:
+    # -- image repository
+    repository: octopusdeploy/octopusdeploy
+    # -- image tag (uses appVersion by default)
+    tag:
+    # -- image pull policy
+    pullPolicy: IfNotPresent
+
+  statefulset:
+    # -- Set annotations on the deployment/statefulset/daemonset/cronjob
+    annotations: {}
+    # -- Set labels on the deployment/statefulset/daemonset/cronjob
+    labels: {}
+    # -- Number of desired pods.
+    replicas: 1
+    # -- Set the upgrade strategy
+    # Valid values are OnDelete and RollingUpdate (default).
+    strategy: RollingUpdate
+    rollingUpdate:
+      # -- Set deployment RollingUpdate max unavailable
+      unavailable:
+      # -- Set deployment RollingUpdate max surge
+      surge:
+      # -- Set statefulset RollingUpdate partition
+      partition:
+  
+  # -- Overide various options for the octopus pods. You can see the items able to be overridden
+  # by looking at the defaultPodOptions section [here](https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml).
+  podOverrides: {}
+
+  resources: {}
+  ## We usually recommend not to specify default resources and to leave this as a conscious
+  ## choice for the user. This also increases chances charts run on environments with little
+  ## resources, such as Minikube. If you do want to specify resources, uncomment the following
+  ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+  storage:
+    # -- Configure the volumeClaimTemplate that will be used to create per-pod persistence.
+    # @default -- See below
+    individual:
+      # -- Enables or disables the persistence item.
+      enabled: true
+      # -- Storage Class for the config volume.
+      # If set to `-`, dynamic provisioning is disabled.
+      # If set to something else, the given storageClass is used.
+      # If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.
+      storageClass:
+      # -- AccessMode for the persistent volume. Make sure this is ReadWriteMany if you have more than one replica.
+      accessMode: ReadWriteOnce
+      # -- The amount of storage that is requested for the persistent volume.
+      size: 10Gi
+      # -- Set to true to retain the PVC upon `helm uninstall`
+      retain: true
+    # -- Configure the persistentVolumeClaim that will be used to create shared storage between pods.
+    # @default -- See below
+    shared:
+      # -- Enables or disables the persistence item.
+      enabled: true
+      # -- Storage Class for the config volume.
+      # If set to `-`, dynamic provisioning is disabled.
+      # If set to something else, the given storageClass is used.
+      # If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.
+      storageClass:
+      # -- If you want to reuse an existing claim, the name of the existing PVC can be passed here.
+      existingClaim: # your-claim
+      # -- AccessMode for the persistent volume. Make sure this is ReadWriteMany if you have more than one replica.
+      accessMode: ReadWriteMany
+      # -- The amount of storage that is requested for the persistent volume.
+      size: 25Gi
+      # -- Set to true to retain the PVC upon `helm uninstall`
+      retain: true
+
+  service:
+    # -- Enables or disables the service
+    enabled: true
+    # -- Set the service type
+    type: ClusterIP
+    # -- Specify the externalTrafficPolicy for the service. Options: Cluster, Local
+    # -- [[ref](https://kubernetes.io/docs/tutorials/services/source-ip/)]
+    externalTrafficPolicy:
+    # -- Specify the ip policy. Options: SingleStack, PreferDualStack, RequireDualStack
+    ipFamilyPolicy:
+    # -- The ip families that should be used. Options: IPv4, IPv6
+    ipFamilies: []
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+    # -- Provide additional labels which may be required.
+    labels: {}
+    # -- Allow adding additional match labels
+    extraSelectorLabels: {}
+    ports:
+      http:
+        # -- Enable or disable the HTTP port for octopus-deploy
+        enabled: true
+        # -- Set the port number that will be exposed by the service for the HTTP server.
+        port: 8080
+      polling:
+        # -- Enable or disable the tentacle polling port for octopus-deploy
+        enabled: true
+        # -- Set the port number that will be exposed by the service for the tentacle polling server.
+        port: 10943
+
+  probes:
+    # -- Liveness probe configuration
+    # @default -- See below
+    liveness:
+      # -- Enable the liveness probe
+      enabled: true
+      # -- The spec field contains the values for the default livenessProbe.
+      # @default -- See below
+      spec:
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        timeoutSeconds: 5
+        failureThreshold: 10
+
+    # -- Redainess probe configuration
+    # @default -- See below
+    readiness:
+      # -- Enable the readiness probe
+      enabled: true
+      # -- The spec field contains the values for the default readinessProbe.
+      # @default -- See below
+      spec:
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        timeoutSeconds: 5
+        failureThreshold: 60
+
+    # -- Startup probe configuration
+    # @default -- See below
+    startup:
+      # -- Enable the startup probe
+      enabled: true
+      # -- The spec field contains the values for the default startupProbe.
+      # @default -- See below
+      spec:
+        initialDelaySeconds: 0
+        periodSeconds: 60
+        timeoutSeconds: 5
+        failureThreshold: 30
+
+  ingress:
+    # -- Enables or disables the ingress
+    enabled: false
+    # -- Provide additional annotations which may be required.
+    annotations:
+      {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    # -- Provide additional labels which may be required.
+    labels: {}
+    # -- Set the ingressClass that is used for this ingress.
+    className: # "nginx"
+    # -- Set the hostname that octopus will be exposed on.
+    hostname: chart-example.local
+    # -- Configure TLS for the ingress. Both secretName and hosts can process a Helm template.
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+
+mssql:
+  image:
+    # -- image repository
+    repository: mcr.microsoft.com/mssql/server
+    # -- image tag
+    tag: 2022-CU10-ubuntu-22.04
+    # -- image pull policy
+    pullPolicy: IfNotPresent
+
+  resources: {}
+  ## We usually recommend not to specify default resources and to leave this as a conscious
+  ## choice for the user. This also increases chances charts run on environments with little
+  ## resources, such as Minikube. If you do want to specify resources, uncomment the following
+  ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+  # -- Overide various options for the mssql pods. You can see the items able to be overridden
+  # by looking at the defaultPodOptions section [here](https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml).
+  podOverrides: {}
+
+  storage:
+    # -- Enables or disables the persistence item.
+    enabled: true
+    # -- Storage Class for the config volume.
+    # If set to `-`, dynamic provisioning is disabled.
+    # If set to something else, the given storageClass is used.
+    # If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.
+    storageClass:
+    # -- If you want to reuse an existing claim, the name of the existing PVC can be passed here.
+    existingClaim: # your-claim
+    # -- AccessMode for the persistent volume. Make sure this is ReadWriteMany if you have more than one replica.
+    accessMode: ReadWriteOnce
+    # -- The amount of storage that is requested for the persistent volume.
+    size: 25Gi
+    # -- Set to true to retain the PVC upon `helm uninstall`
+    retain: true
+
+  service:
+    # -- Enables or disables the service
+    enabled: true
+    # -- Set the service type
+    type: ClusterIP
+    # -- Specify the externalTrafficPolicy for the service. Options: Cluster, Local
+    # -- [[ref](https://kubernetes.io/docs/tutorials/services/source-ip/)]
+    externalTrafficPolicy:
+    # -- Specify the ip policy. Options: SingleStack, PreferDualStack, RequireDualStack
+    ipFamilyPolicy:
+    # -- The ip families that should be used. Options: IPv4, IPv6
+    ipFamilies: []
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+    # -- Provide additional labels which may be required.
+    labels: {}
+    # -- Allow adding additional match labels
+    extraSelectorLabels: {}
+    ports:
+      mssql:
+        # -- Enable or disable the HTTP port for octopus-deploy
+        enabled: true
+        # -- Set the port number that will be exposed by the service for the HTTP server.
+        port: 1433
+
+  probes:
+    # -- Liveness probe configuration
+    # @default -- See below
+    liveness:
+      # -- Enable the liveness probe
+      enabled: true
+      # -- The spec field contains the values for the default livenessProbe.
+      # @default -- See below
+      spec:
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        timeoutSeconds: 5
+        failureThreshold: 10
+
+    # -- Redainess probe configuration
+    # @default -- See below
+    readiness:
+      # -- Enable the readiness probe
+      enabled: true
+      # -- The spec field contains the values for the default readinessProbe.
+      # @default -- See below
+      spec:
+        initialDelaySeconds: 30
+        periodSeconds: 30
+        timeoutSeconds: 5
+        failureThreshold: 60
+
+    # -- Startup probe configuration
+    # @default -- See below
+    startup:
+      # -- Enable the startup probe
+      enabled: true
+      # -- The spec field contains the values for the default startupProbe.
+      # @default -- See below
+      spec:
+        initialDelaySeconds: 0
+        periodSeconds: 30
+        timeoutSeconds: 5
+        failureThreshold: 30
