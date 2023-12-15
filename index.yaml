@@ -49,6 +49,31 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/flaresolverr-1.2.0/flaresolverr-1.2.0.tgz
     version: 1.2.0
+  octopus-deploy:
+  - apiVersion: v2
+    appVersion: 2023.4.8166
+    created: "2023-12-15T20:45:27.964493708Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 2.4.0
+    description: Octopus automates complex deployments. This chart deploys the Octopus
+      Deploy server into a Kubernetes cluster.
+    digest: 30c2504d4f619c50acd9134f84edebb45ed3bc54f66cf960c0ee1d06465681f9
+    home: https://github.com/brandan-schmitz/helm-charts/charts/octopus-deploy
+    icon: file://icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: octopus-deploy
+    sources:
+    - https://octopus.com
+    - https://hub.docker.com/r/octopusdeploy/octopusdeploy
+    - https://mcr.microsoft.com/en-us/product/mssql/server/
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/octopus-deploy-1.0.0/octopus-deploy-1.0.0.tgz
+    version: 1.0.0
   overseerr:
   - apiVersion: v2
     appVersion: 1.33.2
@@ -201,4 +226,4 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/sonarr-1.1.1/sonarr-1.1.1.tgz
     version: 1.1.1
-generated: "2023-12-14T06:30:58.493495036Z"
+generated: "2023-12-15T20:45:29.255065525Z"
