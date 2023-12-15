@@ -1,9 +1,11 @@
 settings:
-  # -- Do you accept the [Microsoft SQL Server Eula](https://hub.docker.com/r/microsoft/mssql-server-windows-express/) and the [Octopus Deploy Eula](https://octopus.com/company/legal)?
-  acceptEula: false
   # -- If this is defined, this chart will pull the below settings from the secret defined.
   # This is useful if upgrading from previous deployments.
   existingSecret:
+  # -- Set to true to retain the secret containing the config upon "helm uninstall"
+  retain: false
+  # -- Do you accept the [Microsoft SQL Server Eula](https://hub.docker.com/r/microsoft/mssql-server-windows-express/) and the [Octopus Deploy Eula](https://octopus.com/company/legal)?
+  acceptEula: false
   # -- The name of the database to use for Octopus
   databaseName: "OctopusDeploy"
   # -- The username for the database server and what Octopus will use to connect to the database. If using the built in database to this chart this must be "sa".
@@ -52,6 +54,10 @@ octopus:
       surge:
       # -- Set statefulset RollingUpdate partition
       partition:
+  
+  # -- Overide various options for the octopus pods. You can see the items able to be overridden
+  # by looking at the defaultPodOptions section [here](https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml).
+  podOverrides: {}
 
   resources: {}
   ## We usually recommend not to specify default resources and to leave this as a conscious
@@ -212,6 +218,10 @@ mssql:
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
+
+  # -- Overide various options for the mssql pods. You can see the items able to be overridden
+  # by looking at the defaultPodOptions section [here](https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml).
+  podOverrides: {}
 
   storage:
     # -- Enables or disables the persistence item.

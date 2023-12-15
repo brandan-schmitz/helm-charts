@@ -2,6 +2,7 @@
 {{- define "octopus-deploy.octopus-base-keys" -}}
 controllers:
   octopus:
+    pod: {}
     containers:
       main:
         image: {}
@@ -17,6 +18,7 @@ ingress:
 # Merge in values from specific config sections
 {{- $_ := mergeOverwrite .Values.controllers.octopus.containers.main.image .Values.octopus.image -}}
 {{- $_ := mergeOverwrite .Values.controllers.octopus .Values.octopus.statefulset -}}
+{{- $_ := mergeOverwrite .Values.controllers.octopus.pod .Values.octopus.podOverrides -}}
 {{- $_ := mergeOverwrite .Values.controllers.octopus.containers.main.resources .Values.octopus.resources -}}
 {{- define "octopus-deploy.volumeClaimTemplates" -}}
 {{- if .Values.octopus.storage.individual.enabled }}
@@ -105,7 +107,7 @@ controllers:
           - name: MASTER_KEY
             valueFrom:
               secretKeyRef:
-                name: {{ default .Values.settings.existingSecret (printf "%s-master-key" .Release.Name) }}
+                name: {{ default .Values.settings.existingSecret (printf "%s-config" .Release.Name) }}
                 key: MASTER_KEY
           {{- if not .Values.settings.enableDockerInDocker }}
           - name: DISABLE_DIND

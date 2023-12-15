@@ -2,6 +2,7 @@
 {{- define "octopus-deploy.mssql-base-keys" -}}
 controllers:
   mssql:
+    pod: {}
     containers:
       main:
         image: {}
@@ -14,6 +15,7 @@ service:
 
 # Merge in values from specific config sections
 {{- $_ := mergeOverwrite .Values.controllers.mssql.containers.main.image .Values.mssql.image -}}
+{{- $_ := mergeOverwrite .Values.controllers.mssql.pod .Values.mssql.podOverrides -}}
 {{- $_ := mergeOverwrite .Values.controllers.mssql.containers.main.resources .Values.mssql.resources -}}
 {{- $_ := mergeOverwrite .Values.service.mssql .Values.mssql.service -}}
 {{- $_ := mergeOverwrite .Values.controllers.mssql.containers.main.probes .Values.mssql.probes -}}
