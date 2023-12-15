@@ -23,6 +23,8 @@ jobs:
 
       - name: Install Helm
         uses: azure/setup-helm@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Helm Docs
         run: |
@@ -42,3 +44,4 @@ jobs:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           CR_OWNER: "brandan-schmitz"
           CR_REPO: "helm-charts"
+          CR_SKIP_EXISTING: true
