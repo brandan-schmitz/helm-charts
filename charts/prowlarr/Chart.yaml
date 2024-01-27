@@ -14,5 +14,5 @@ home: https://github.com/brandan-schmitz/helm-charts/charts/prowlarr
 sources:
   - https://github.com/linuxserver/docker-prowlarr
   - https://github.com/Prowlarr/Prowlarr
-version: 1.5.0
-appVersion: 1.10.5.4116
+version: 1.6.0
+appVersion: 1.12.2.4211
