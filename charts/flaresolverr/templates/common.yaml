@@ -6,6 +6,8 @@
 {{ if not .Values.global.nameOverride }}
 global:
   nameOverride: "{{ .Release.Name }}"
+image:
+  tag: "{{ default (printf "v%s" .Chart.AppVersion) .Values.image.tag }}"
 {{ end }}
 {{- end -}}
 {{- $_ := mergeOverwrite .Values (include "app-template.hardcodedValues" . | fromYaml) -}}
