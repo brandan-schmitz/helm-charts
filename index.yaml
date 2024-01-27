@@ -27,6 +27,29 @@ entries:
     version: 1.1.1
   flaresolverr:
   - apiVersion: v2
+    appVersion: 3.3.13
+    created: "2024-01-27T09:18:14.248343111Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: FlareSolverr is a proxy server to bypass Cloudflare and DDoS-GUARD
+      protection.
+    digest: af200717c87ec0f50511c4dad45404467990065e7cbdabd7df31308378267be7
+    home: https://github.com/brandan-schmitz/helm-charts/flaresolverr
+    icon: file://icon.svg
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: flaresolverr
+    sources:
+    - https://github.com/FlareSolverr/FlareSolverr
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/flaresolverr-1.2.1/flaresolverr-1.2.1.tgz
+    version: 1.2.1
+  - apiVersion: v2
     appVersion: 3.3.2
     created: "2023-12-14T06:30:57.372101087Z"
     dependencies:
@@ -126,6 +149,29 @@ entries:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/plex-1.1.4/plex-1.1.4.tgz
     version: 1.1.4
   prowlarr:
+  - apiVersion: v2
+    appVersion: 1.12.2.4211
+    created: "2024-01-27T09:18:14.656756069Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: Prowlarr is a indexer manager/proxy built on the popular arr .net/reactjs
+      base stack to integrate with your various PVR apps.
+    digest: e0bd1b6fc1a244f59e914c3f4233c4298da8e9f4be557dcee4ae0eaeddcf1eb6
+    home: https://github.com/brandan-schmitz/helm-charts/charts/prowlarr
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: prowlarr
+    sources:
+    - https://github.com/linuxserver/docker-prowlarr
+    - https://github.com/Prowlarr/Prowlarr
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/prowlarr-1.6.0/prowlarr-1.6.0.tgz
+    version: 1.6.0
   - apiVersion: v2
     appVersion: 1.10.5.4116
     created: "2023-12-14T06:30:57.926817833Z"
@@ -270,6 +316,33 @@ entries:
   sonarr:
   - apiVersion: v2
     appVersion: 3.0.10.1567
+    created: "2024-01-27T09:18:15.070032772Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: Sonarr (formerly NZBdrone) is a PVR for usenet and bittorrent users.
+      It can monitor multiple RSS feeds for new episodes of your favorite shows and
+      will grab, sort and rename them. It can also be configured to automatically
+      upgrade the quality of files already downloaded when a better quality format
+      becomes available.
+    digest: d989db2d942844b50d1f6855ca6d040c7d8175327f38f41d99628fee18b84a59
+    home: https://github.com/brandan-schmitz/helm-charts/charts/sonarr
+    icon: file://icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: sonarr
+    sources:
+    - https://github.com/linuxserver/docker-sonarr
+    - https://github.com/Sonarr/Sonarr
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/sonarr-1.1.2/sonarr-1.1.2.tgz
+    version: 1.1.2
+  - apiVersion: v2
+    appVersion: 3.0.10.1567
     created: "2023-12-14T06:30:58.493483585Z"
     dependencies:
     - name: common
@@ -295,4 +368,4 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/sonarr-1.1.1/sonarr-1.1.1.tgz
     version: 1.1.1
-generated: "2024-01-27T08:43:10.044642989Z"
+generated: "2024-01-27T09:18:15.07005837Z"
