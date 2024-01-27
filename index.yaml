@@ -28,6 +28,29 @@ entries:
   flaresolverr:
   - apiVersion: v2
     appVersion: 3.3.13
+    created: "2024-01-27T09:27:32.280447667Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: FlareSolverr is a proxy server to bypass Cloudflare and DDoS-GUARD
+      protection.
+    digest: 46c620f95c17b606b98c2d2f46abfc12f6d8bbfd2fbc82d54b5acc6812cbf907
+    home: https://github.com/brandan-schmitz/helm-charts/flaresolverr
+    icon: file://icon.svg
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: flaresolverr
+    sources:
+    - https://github.com/FlareSolverr/FlareSolverr
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/flaresolverr-1.2.2/flaresolverr-1.2.2.tgz
+    version: 1.2.2
+  - apiVersion: v2
+    appVersion: 3.3.13
     created: "2024-01-27T09:18:14.248343111Z"
     dependencies:
     - name: common
@@ -368,4 +391,4 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/sonarr-1.1.1/sonarr-1.1.1.tgz
     version: 1.1.1
-generated: "2024-01-27T09:18:15.07005837Z"
+generated: "2024-01-27T09:27:33.338730022Z"
