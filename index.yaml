@@ -177,6 +177,29 @@ entries:
   radarr:
   - apiVersion: v2
     appVersion: 5.2.6.8376
+    created: "2024-01-27T08:27:17.377061213Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: A fork of Sonarr to work with movies à la Couchpotato.
+    digest: fb714ebf18892f20bd85aabe693e156f91af16a341fefbba9598b540593a1c48
+    home: https://github.com/brandan-schmitz/helm-charts/charts/radarr
+    icon: file://icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: radarr
+    sources:
+    - https://github.com/linuxserver/docker-radarr
+    - https://github.com/Radarr/Radarr
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/radarr-2.2.1/radarr-2.2.1.tgz
+    version: 2.2.1
+  - apiVersion: v2
+    appVersion: 5.2.6.8376
     created: "2024-01-27T06:29:41.076832479Z"
     dependencies:
     - name: common
@@ -249,4 +272,4 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/sonarr-1.1.1/sonarr-1.1.1.tgz
     version: 1.1.1
-generated: "2024-01-27T06:29:41.229850968Z"
+generated: "2024-01-27T08:27:17.556665521Z"
