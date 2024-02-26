@@ -27,6 +27,29 @@ entries:
     version: 1.1.1
   flaresolverr:
   - apiVersion: v2
+    appVersion: 3.3.15
+    created: "2024-02-26T04:49:44.068726283Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: FlareSolverr is a proxy server to bypass Cloudflare and DDoS-GUARD
+      protection.
+    digest: 9880d0f5acafa25005d73ebeba1492ab07ad3b84aa20b62dc8f57eb7e54e3b9e
+    home: https://github.com/brandan-schmitz/helm-charts/flaresolverr
+    icon: file://icon.svg
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: flaresolverr
+    sources:
+    - https://github.com/FlareSolverr/FlareSolverr
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/flaresolverr-1.2.3/flaresolverr-1.2.3.tgz
+    version: 1.2.3
+  - apiVersion: v2
     appVersion: 3.3.13
     created: "2024-01-27T09:27:32.280447667Z"
     dependencies:
@@ -146,6 +169,32 @@ entries:
     version: 1.2.2
   plex:
   - apiVersion: v2
+    appVersion: 1.40.0
+    created: "2024-02-26T04:49:44.412000381Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: Plex organizes video, music and photos from personal media libraries
+      and streams them to smart TVs, streaming boxes and mobile devices. This container
+      is packaged as a standalone Plex Media Server. has always been a top priority.
+      Straightforward design and bulk actions mean getting things done faster.
+    digest: 9edcdece466cfc7b70299513b0ada7f440a3373746b794a9242f2994331ebf01
+    home: https://github.com/brandan-schmitz/helm-charts/charts/plex
+    icon: file://icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: plex
+    sources:
+    - https://github.com/linuxserver/docker-plex
+    - https://plex.tv
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/plex-1.2.0/plex-1.2.0.tgz
+    version: 1.2.0
+  - apiVersion: v2
     appVersion: 1.32.8
     created: "2023-12-14T06:30:57.740993811Z"
     dependencies:
@@ -172,6 +221,29 @@ entries:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/plex-1.1.4/plex-1.1.4.tgz
     version: 1.1.4
   prowlarr:
+  - apiVersion: v2
+    appVersion: 1.13.3.4273
+    created: "2024-02-26T04:49:44.534557105Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: Prowlarr is a indexer manager/proxy built on the popular arr .net/reactjs
+      base stack to integrate with your various PVR apps.
+    digest: 1eb273b56c74642c09269c5d090bffea6d2ab95ca12d2728cb5e0e2dad80edd5
+    home: https://github.com/brandan-schmitz/helm-charts/charts/prowlarr
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: prowlarr
+    sources:
+    - https://github.com/linuxserver/docker-prowlarr
+    - https://github.com/Prowlarr/Prowlarr
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/prowlarr-1.7.0/prowlarr-1.7.0.tgz
+    version: 1.7.0
   - apiVersion: v2
     appVersion: 1.12.2.4211
     created: "2024-01-27T09:18:14.656756069Z"
@@ -220,6 +292,30 @@ entries:
     version: 1.5.0
   qbittorrent:
   - apiVersion: v2
+    appVersion: 4.6.3
+    created: "2024-02-26T04:49:44.681631455Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: The Qbittorrent project aims to provide an open-source software alternative
+      to µTorrent. qBittorrent is based on the Qt toolkit and libtorrent-rasterbar
+      library.
+    digest: f841c13d4fdefcc4aff3b7d22b86889356f777fe90ded06fbd19639fa7894cde
+    home: https://github.com/brandan-schmitz/helm-charts/charts/qbittorrent
+    icon: file://icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: qbittorrent
+    sources:
+    - https://github.com/linuxserver/docker-qbittorrent
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/qbittorrent-1.1.0/qbittorrent-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v2
     appVersion: 4.5.4
     created: "2023-12-14T06:30:58.122845457Z"
     dependencies:
@@ -244,6 +340,29 @@ entries:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/qbittorrent-1.0.0/qbittorrent-1.0.0.tgz
     version: 1.0.0
   radarr:
+  - apiVersion: v2
+    appVersion: 5.3.6.8612
+    created: "2024-02-26T04:49:44.801958484Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: A fork of Sonarr to work with movies à la Couchpotato.
+    digest: fa416410fa749ce1e43a92fa08eeb4ec295bb3d954fabd554fbdc2b6056243ed
+    home: https://github.com/brandan-schmitz/helm-charts/charts/radarr
+    icon: file://icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: radarr
+    sources:
+    - https://github.com/linuxserver/docker-radarr
+    - https://github.com/Radarr/Radarr
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/radarr-2.3.0/radarr-2.3.0.tgz
+    version: 2.3.0
   - apiVersion: v2
     appVersion: 5.2.6.8376
     created: "2024-01-27T08:43:09.934809845Z"
@@ -391,4 +510,4 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/sonarr-1.1.1/sonarr-1.1.1.tgz
     version: 1.1.1
-generated: "2024-01-27T09:27:33.338730022Z"
+generated: "2024-02-26T04:49:44.939830146Z"
