@@ -14,5 +14,5 @@ home: https://github.com/brandan-schmitz/helm-charts/tree/master/prowlarr
 sources:
   - https://github.com/linuxserver/docker-prowlarr
   - https://github.com/Prowlarr/Prowlarr
-version: 1.7.0
-appVersion: 1.13.3.4273
+version: 1.8.0
+appVersion: 1.17.2.4511
