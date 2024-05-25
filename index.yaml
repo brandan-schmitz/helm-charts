@@ -457,6 +457,33 @@ entries:
     version: 2.1.0
   sonarr:
   - apiVersion: v2
+    appVersion: 4.0.1.929
+    created: "2024-05-25T02:18:55.804781889Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s.github.io/helm-charts
+      version: 1.5.1
+    description: Sonarr (formerly NZBdrone) is a PVR for usenet and bittorrent users.
+      It can monitor multiple RSS feeds for new episodes of your favorite shows and
+      will grab, sort and rename them. It can also be configured to automatically
+      upgrade the quality of files already downloaded when a better quality format
+      becomes available.
+    digest: 0c5297db531071781ef5fa13ad758438f2ced9d83b391784b601dbb346d63286
+    home: https://github.com/brandan-schmitz/helm-charts/charts/sonarr
+    icon: file://icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: sonarr
+    sources:
+    - https://github.com/linuxserver/docker-sonarr
+    - https://github.com/Sonarr/Sonarr
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/sonarr-2.0.0/sonarr-2.0.0.tgz
+    version: 2.0.0
+  - apiVersion: v2
     appVersion: 3.0.10.1567
     created: "2024-01-27T09:18:15.070032772Z"
     dependencies:
@@ -510,4 +537,4 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/sonarr-1.1.1/sonarr-1.1.1.tgz
     version: 1.1.1
-generated: "2024-02-26T04:49:44.939830146Z"
+generated: "2024-05-25T02:18:55.80482557Z"
