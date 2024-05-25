@@ -1,0 +1,339 @@
+image:
+  # -- image repository
+  repository: harbor.celestialdata.net/plex-system/blackhole-manager
+  # -- image tag
+  tag:
+  # -- image pull policy
+  pullPolicy: IfNotPresent
+
+# -- Enable the Grafana Dashboard
+enableGrafanaDashboard: false
+
+# -- Set image pull secrets
+imagePullSecrets: []
+
+
+env:
+  # -- Set the timezone that will be used by the container
+  TZ: America/Chicago
+
+
+service:
+  main:
+    # -- Enables or disables the service
+    enabled: true
+
+    # -- Set the service type
+    type: ClusterIP
+
+    # -- Specify the externalTrafficPolicy for the service. Options: Cluster, Local
+    # -- [[ref](https://kubernetes.io/docs/tutorials/services/source-ip/)]
+    externalTrafficPolicy:
+
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+
+    # -- Provide additional labels which may be required.
+    labels: {}
+
+    ports:
+      http:
+        # -- The port number
+        port: 8080
+
+        # -- Port protocol.
+        protocol: HTTP
+
+        # -- Specify the nodePort value for the LoadBalancer and NodePort service types.
+        # [[ref]](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)
+        nodePort: 8080
+
+
+persistence:
+  # -- Persistence for application configuration
+  # @default -- See below
+  config:
+    # -- Enables or disables the persistence item
+    enabled: true
+
+    # -- Sets the persistence type
+    # Valid options are pvc, emptyDir, hostPath, secret, configMap or custom
+    type: secret
+
+    # -- The name of the secret to utilize. This may need to be changed based
+    # upon the release name specified when installing with helm.
+    name: blackhole-manager-config
+
+    # -- The folder the config will be mounted too in the container.
+    mountPath: /deployments/config
+
+    # -- Specify if the volume should be mounted read-only.
+    readOnly: true
+
+    # -- The name of the key in the secret containing the config file contents
+    # as well as the file name it will be created as in the container under the
+    # path specified above. This should not be changed.
+    items:
+      - key: application.yaml
+        path: application.yaml
+
+  # -- Persistence for media files.
+  # @default -- See below
+  media:
+    # -- Enables or disables the persistence item
+    enabled: true
+
+    # -- Storage Class for the config volume.
+    # If set to `-`, dynamic provisioning is disabled.
+    # If set to something else, the given storageClass is used.
+    # If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner.
+    storageClass: # "-"
+
+    # -- If you want to reuse an existing claim, the name of the existing PVC can be passed here.
+    existingClaim: # your-claim
+
+    # -- The folder the media will be mounted too in the container.
+    mountPath: /deployments/data
+
+    # -- AccessMode for the persistent volume.
+    # Make sure to select an access mode that is supported by your storage provider!
+    # [[ref]](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes)
+    accessMode: ReadWriteOnce
+
+    # -- The amount of storage that is requested for the persistent volume.
+    size: 1Ti
+
+    # -- Set to true to retain the PVC upon `helm uninstall`
+    retain: true
+
+
+resources:
+  requests:
+    # -- CPU Request amount
+    cpu: 100m
+
+    # Memory Request Amount
+    memory: 512Mi
+
+  limits:
+    # -- CPU Limit amount
+    cpu: 500m
+
+    # -- Memory Limit amount
+    memory: 1Gi
+
+
+# -- Configure the ServiceMonitors for the chart here.
+# Additional ServiceMonitors can be added by adding a dictionary key similar to the 'main' ServiceMonitors.
+# @default -- See below
+serviceMonitor:
+  main:
+    # -- Enables or disables the serviceMonitor.
+    enabled: false
+
+    # -- Override the name suffix that is used for this serviceMonitor.
+    nameOverride:
+
+    # -- Provide additional annotations which may be required.
+    annotations: {}
+
+    # -- Provide additional labels which may be required.
+    labels: {}
+
+    # -- Configures a custom selector for the serviceMonitor, this takes precedence over
+    # specifying a service name.
+    # Helm templates can be used.
+    selector: {}
+
+    # -- Configures the target Service for the serviceMonitor. Helm templates can be used.
+    serviceName: '{{ include "bjw-s.common.lib.chart.names.fullname" $ }}'
+
+    # -- Configures the endpoints for the serviceMonitor.
+    # @default -- See values.yaml
+    endpoints:
+      - port: http
+        scheme: http
+        path: /q/metrics
+        interval: 30s
+        scrapeTimeout: 10s
+
+
+# @ignored
+probes:
+  liveness:
+    enabled: true
+    custom: true
+    spec:
+      httpGet:
+        scheme: HTTP
+        path: /q/health/live
+        port: 8080
+      initialDelaySeconds: 240
+      timeoutSeconds: 10
+      periodSeconds: 10
+      successThreshold: 1
+      failureThreshold: 3
+  readiness:
+    enabled: true
+    custom: true
+    spec:
+      httpGet:
+        scheme: HTTP
+        path: /q/health/ready
+        port: 8080
+      initialDelaySeconds: 30
+      timeoutSeconds: 10
+      periodSeconds: 10
+      successThreshold: 1
+      failureThreshold: 30
+  startup:
+    enabled: true
+    custom: true
+    spec:
+      httpGet:
+        scheme: HTTP
+        path: /q/health/started
+        port: 8080
+      initialDelaySeconds: 0
+      timeoutSeconds: 1
+      periodSeconds: 5
+      failureThreshold: 30
+
+
+secrets:
+  config:
+    enabled: true
+    stringData:
+      # -- Configure the application.yaml file contents.
+      application.yaml: |-
+        ############################
+        ### Application Settings ###
+        ############################
+        ApplicationSettings:
+          # Level at of which the application will start displaying logging information.
+          # Valid logging levels are as follows, in order from the most output to the least output:
+          #  - ALL
+          #  - TRACE
+          #  - DEBUG
+          #  - INFO
+          #  - WARN
+          #  - ERROR
+          #  - FATAL
+          #  - OFF
+          logLevel: INFO
+
+          # Private API key for real-debrid which is where the movies get downloaded from
+          # In order to get an API key, you will need to register an account at https://real-debrid.com
+          # and purchase a premium offer. Generally the 180 day plan is the best deal. Once purchased, go
+          # to https://real-debrid.com/apitoken to retrieve your token. You will need to purchase more time
+          # before your plan expires otherwise the bot will not function.
+          realDebridKey: somerandomeapikeygoeshereotherwiseitwontwork
+
+
+        #########################
+        ### Database Settings ###
+        #########################
+        DatabaseSettings:
+          # Enable or disable the external database. This provides the ability for the application
+          # to keep a history of its work. Disabling this will enable the built-in, in-memory database.
+          enabled: true
+
+          # The IP or URL of the server hosting the application's database.
+          address: localhost
+
+          # The database server port.
+          port: 3306
+
+          # The name of the database the bot should use
+          name: blackhole-manager
+
+          # The username the bot will use to access the database
+          username: blackhole-manager
+
+          # The password the bot will use to access the database
+          password: ChangeMe*1234
+
+          # Enable or disable the ability for the application to automatically apply
+          # database migrations to the database upon startup. This is recommended to be
+          # set to true in order to prevent issues with updates. This is only used if an
+          # external database is enabled and specified.
+          enableMigrations: true
+
+
+        ######################
+        ### Aria2 Settings ###
+        ######################
+        AriaSettings:
+          # The protocol (http/https), IP/DNS address, and port number of the Aria2 server.
+          # Example address: http://127.0.0.1:8080/jsonrpc
+          address: "http://127.0.0.1:8080/jsonrpc"
+
+          # The access token used in the JSONRPC requests.
+          accessToken: ""
+
+          # The path to the folder Aria2 is configured to download files into as mounted on the machine
+          # running the blackhole-manager application if it is not the same machine as aria2 is running on.
+          downloadFolder: /path/to/aria2/downloads
+
+          # The path to the aria download folder as it appears to aria. If this is on a different system
+          # than the one running the blackhole-manager this should be the file path on that remote system.
+          remoteDownloadFolder: /aria2/data
+
+
+        #######################
+        ### Radarr Settings ###
+        #######################
+        RadarrSettings:
+          # The path to the folder Radarr is configured to use as a black hole
+          # for torrent and magnet files that it finds.
+          sourceFolder: /path/to/radarr/sources
+
+          # The path to the folder where files that this application is prepping to be moved to
+          # the completed folder for Radarr to process are stored.
+          tempFolder: /path/to/radarr/temp
+
+          # The path to the folder Radarr is configured to watch for completed downloads.
+          completedFolder: /path/to/radarr/completed
+
+          # The protocol (http/https), IP/DNS address, and port number of the Radarr server.
+          # Example address: http://127.0.0.1:7878
+          address: http://127.0.0.1:7878
+
+          # The API key used to access the Radarr API
+          apiKey: ""
+
+
+        #######################
+        ### Sonarr Settings ###
+        #######################
+        SonarrSettings:
+          # The path to the folder Sonarr is configured to use as a black hole
+          # for torrent and magnet files that it finds.
+          sourceFolder: /path/to/sonarr/sources
+
+          # The path to the folder where files that this application is prepping to be moved to
+          # the completed folder for Sonarr to process are stored.
+          tempFolder: /path/to/sonarr/temp
+
+          # The path to the folder Sonarr is configured to watch for completed downloads.
+          completedFolder: /path/to/sonarr/completed
+
+          # The protocol (http/https), IP/DNS address, and port number of the Sonarr server.
+          # Example address: http://127.0.0.1:8989
+          address: http://127.0.0.1:8989
+
+          # The API key used to access the Sonarr API
+          apiKey: ""
+
+
+        ################################
+        ### Manual Download Settings ###
+        ################################
+        ManualDownloadSettings:
+          # The path to the folder where you will put torrent or magnet file, or link files
+          # A link file is a text file that ends with .link and has one link to download a file per line
+          sourceFolder: /path/to/manual/sources
+
+          # The path to the folder where the completed downloads will be placed. Note that
+          # files downloaded using this method will need to be manually moved to the proper completed folder.
+          completedFolder: /path/to/manual/completed

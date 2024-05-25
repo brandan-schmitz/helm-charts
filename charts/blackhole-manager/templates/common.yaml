@@ -1,0 +1,25 @@
+---
+{{- include "bjw-s.common.loader.init" . }}
+
+{{- define "app-template.hardcodedValues" -}}
+# Set the nameOverride based on the release name if no override has been set
+{{ if not .Values.global.nameOverride }}
+global:
+  nameOverride: "{{ .Release.Name }}"
+{{ end }}
+
+{{ if .Values.enableGrafanaDashboard | default "false" }}
+configMaps:
+  grafana-dashboard:
+    enabled: true
+    labels:
+      grafana_dashboard: "1"
+    data:
+      {{ (.Files.Glob "files/grafana_dashboard.json").AsConfig | nindent 6 }}
+{{- end }}
+
+{{- end -}}
+{{- $_ := mergeOverwrite .Values (include "app-template.hardcodedValues" . | fromYaml) -}}
+
+{{/* Render the templates */}}
+{{ include "bjw-s.common.loader.generate" . }}
