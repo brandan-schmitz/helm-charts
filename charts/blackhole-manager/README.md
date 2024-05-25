@@ -1,6 +1,6 @@
 # blackhole-manager
 
-![Version: 1.2.3](https://img.shields.io/badge/Version-1.2.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.2](https://img.shields.io/badge/AppVersion-1.1.2-informational?style=flat-square)
+![Version: 1.3.0](https://img.shields.io/badge/Version-1.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.2](https://img.shields.io/badge/AppVersion-1.1.2-informational?style=flat-square)
 
 Blackhole Manager coordinates the downloading of magnet and torrent files send to a blackhole folder from Sonarr and Radarr from real-debrid through the Aria2 download program.
 
@@ -27,7 +27,7 @@ $ helm install blackhole-manager brandan-schmitz/blackhole-manager
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| image.repository | string | `"harbor.celestialdata.net/plex-system/blackhole-manager"` | image repository |
+| image.repository | string | `"public-docker.nexus.celestialdata.net/brandan-schmitz/blackhole-manager"` | image repository |
 | image.tag | string | `nil` | image tag |
 | image.pullPolicy | string | `"IfNotPresent"` | image pull policy |
 | enableGrafanaDashboard | bool | `false` | Enable the Grafana Dashboard |

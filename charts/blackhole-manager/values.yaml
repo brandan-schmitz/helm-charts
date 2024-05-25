@@ -1,6 +1,6 @@
 image:
   # -- image repository
-  repository: harbor.celestialdata.net/plex-system/blackhole-manager
+  repository: public-docker.nexus.celestialdata.net/brandan-schmitz/blackhole-manager
   # -- image tag
   tag:
   # -- image pull policy
