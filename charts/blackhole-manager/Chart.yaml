@@ -14,5 +14,5 @@ home: https://github.com/brandan-schmitz/helm-charts/tree/master/blackhole-manag
 sources:
   - https://github.com/brandan-schmitz/blackhole-manager
 icon: file://icon.png
-version: 1.3.0
-appVersion: 1.1.2
+version: 1.3.1
+appVersion: v1.1.2
