@@ -10,7 +10,7 @@ dependencies:
   - name: common
     repository: https://bjw-s.github.io/helm-charts
     version: 1.5.1
-home: https://github.com/brandan-schmitz/blackhole-manager/charts/blackhole-manager
+home: https://github.com/brandan-schmitz/helm-charts/tree/master/blackhole-manager
 sources:
   - https://github.com/brandan-schmitz/blackhole-manager
 icon: file://icon.png

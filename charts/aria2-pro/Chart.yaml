@@ -10,7 +10,7 @@ dependencies:
   - name: common
     repository: https://bjw-s.github.io/helm-charts
     version: 1.5.1
-home: https://github.com/brandan-schmitz/helm-charts/aria2-pro
+home: https://github.com/brandan-schmitz/helm-charts/tree/master/aria2-pro
 sources:
   - https://github.com/P3TERX/Aria2-Pro-Docker
   - https://github.com/aria2/aria2

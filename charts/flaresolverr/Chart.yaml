@@ -10,7 +10,7 @@ dependencies:
   - name: common
     repository: https://bjw-s.github.io/helm-charts
     version: 1.5.1
-home: https://github.com/brandan-schmitz/helm-charts/flaresolverr
+home: https://github.com/brandan-schmitz/helm-charts/tree/master/flaresolverr
 sources:
   - https://github.com/FlareSolverr/FlareSolverr
 icon: file://icon.svg

@@ -10,7 +10,7 @@ dependencies:
   - name: common
     repository: https://bjw-s.github.io/helm-charts
     version: 1.5.1
-home: https://github.com/brandan-schmitz/helm-charts/charts/overseerr
+home: https://github.com/brandan-schmitz/helm-charts/tree/master/overseerr
 sources:
   - https://github.com/linuxserver/docker-overseerr
   - https://github.com/sct/overseerr
