@@ -98,6 +98,24 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/blackhole-manager-1.2.3/blackhole-manager-1.2.3.tgz
     version: 1.2.3
+  env-injector-webhook:
+  - apiVersion: v1
+    appVersion: 0.1.18
+    created: "2024-06-04T04:43:50.952431551Z"
+    description: A Helm chart for kubernetes environment injector mutating webhook
+    digest: f05673ef5439f8fd902265dfbce57460a4260e017902a3115aff0652ff5e6e82
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/env-injector-webhook
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: env-injector-webhook
+    sources:
+    - https://github.com/hmcts/k8s-env-injector
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/env-injector-webhook-1.0.0/env-injector-webhook-1.0.0.tgz
+    version: 1.0.0
   flaresolverr:
   - apiVersion: v2
     appVersion: 3.3.19
@@ -756,4 +774,4 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/sonarr-1.1.1/sonarr-1.1.1.tgz
     version: 1.1.1
-generated: "2024-05-25T06:18:24.075142524Z"
+generated: "2024-06-04T04:43:52.097740553Z"
