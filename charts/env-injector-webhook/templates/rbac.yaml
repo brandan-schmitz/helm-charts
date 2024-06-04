@@ -1,0 +1,67 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: env-injector
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+    "helm.sh/hook-weight": "-3"
+rules:
+  - apiGroups:
+      - ''
+    resources:
+      - 'pods'
+      - 'namespaces'
+      - 'configmaps'
+    verbs:
+      - 'get'
+      - 'list'
+      - 'patch'
+  - apiGroups:
+      - 'certificates.k8s.io'
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - ''
+    resources:
+      - 'secrets'
+    verbs:
+      - '*'
+  - apiGroups:
+      - 'admissionregistration.k8s.io'
+    resources:
+      - 'mutatingwebhookconfigurations'
+    verbs:
+      - '*'
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: env-injector
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+    "helm.sh/hook-weight": "-3"
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: env-injector
+subjects:
+  - kind: ServiceAccount
+    name: env-injector
+    namespace: {{ .Release.Namespace }}
+    
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: env-injector
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+    "helm.sh/hook-weight": "-3"
+  namespace: {{ .Release.Namespace }}

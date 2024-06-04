@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "chart-env-injector.name" . }}-deployment
+  labels:
+    {{- ( include "chart-env-injector.labels" . ) | indent 4 }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "chart-env-injector.name" . }}
+  template:
+    metadata:
+      labels:
+        {{- ( include "chart-env-injector.labels" . ) | indent 8 }}
+    spec:
+      containers:
+        - name: env-injector
+          image: {{ .Values.image }}
+          imagePullPolicy: IfNotPresent
+          args:
+            - -envCfgFile=/etc/webhook/config/envconfig.yaml
+            - -tlsCertFile=/etc/webhook/certs/cert.pem
+            - -tlsKeyFile=/etc/webhook/certs/key.pem
+            - -alsologtostderr
+            - -v=4
+            - 2>&1
+          volumeMounts:
+            - name: webhook-certs
+              mountPath: /etc/webhook/certs
+              readOnly: true
+            - name: webhook-config
+              mountPath: /etc/webhook/config
+      volumes:
+        - name: webhook-certs
+          secret:
+            secretName: {{ include "chart-env-injector.name" . }}-certs
+        - name: webhook-config
+          configMap:
+            name: {{ include "chart-env-injector.name" . }}-configmap
