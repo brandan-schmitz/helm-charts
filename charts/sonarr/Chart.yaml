@@ -15,5 +15,5 @@ sources:
   - https://github.com/linuxserver/docker-sonarr
   - https://github.com/Sonarr/Sonarr
 icon: file://icon.png
-version: 2.0.1
-appVersion: 4.0.4.1491
+version: 2.0.2
+appVersion: 4.0.5.1710
