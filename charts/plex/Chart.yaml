@@ -15,5 +15,5 @@ sources:
   - https://github.com/linuxserver/docker-plex
   - https://plex.tv
 icon: file://icon.png
-version: 1.2.2
-appVersion: 1.40.3
+version: 1.2.3
+appVersion: 1.40.4
