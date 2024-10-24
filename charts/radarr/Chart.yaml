@@ -15,5 +15,5 @@ sources:
   - https://github.com/linuxserver/docker-radarr
   - https://github.com/Radarr/Radarr
 icon: file://icon.png
-version: 2.5.0
-appVersion: 5.7.0.8882
+version: 2.6.0
+appVersion: 5.12.2.9335
