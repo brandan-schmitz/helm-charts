@@ -1241,6 +1241,32 @@ entries:
   restreamer:
   - apiVersion: v2
     appVersion: 2.12.0
+    created: "2025-05-04T02:03:34.53062259Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 3.7.3
+    description: The Restreamer is a complete streaming server solution for self-hosting.
+      It has a visually appealing user interface and no ongoing license costs. Upload
+      your live stream to YouTube, Twitch, Facebook, Vimeo, or other streaming solutions
+      like Wowza. Receive video data from OBS and publish it with the RTMP and SRT
+      server.
+    digest: be448a3e60c767261a65bae8c9fcdb866b34ffec6f2e33409e2f9d06731e4220
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/restreamer
+    icon: file://icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: restreamer
+    sources:
+    - https://github.com/datarhei/restreamer
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/restreamer-1.0.1/restreamer-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    appVersion: 2.12.0
     created: "2025-05-04T01:47:50.864168557Z"
     dependencies:
     - name: common
@@ -1509,4 +1535,4 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/sonarr-1.1.1/sonarr-1.1.1.tgz
     version: 1.1.1
-generated: "2025-05-04T01:47:50.978912775Z"
+generated: "2025-05-04T02:03:34.618196466Z"
