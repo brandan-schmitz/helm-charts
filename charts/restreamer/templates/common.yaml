@@ -11,7 +11,7 @@ controllers:
   main:
     defaultContainerOptions:
       image:
-        repository: "{{ default (printd "datarhei/restreamer") .Values.controllers.main.defaultContainerOptions.image.repository }}"
+        repository: "{{ default (printf "datarhei/restreamer") .Values.controllers.main.defaultContainerOptions.image.repository }}"
         tag: "{{ default (printf "version-%s" .Chart.AppVersion) .Values.controllers.main.defaultContainerOptions.image.tag }}"
 {{ end }}
 {{- end -}}
