@@ -8,12 +8,12 @@ maintainers:
     email: brandan.schmitz@celestialdata.net
 dependencies:
   - name: common
-    repository: https://bjw-s.github.io/helm-charts
+    repository: https://bjw-s-labs.github.io/helm-charts/
     version: 1.5.1
 home: https://github.com/brandan-schmitz/helm-charts/tree/master/radarr
 sources:
   - https://github.com/linuxserver/docker-radarr
   - https://github.com/Radarr/Radarr
 icon: file://icon.png
-version: 2.7.0
-appVersion: 5.18.4.9674
+version: 2.8.0
+appVersion: 5.22.4.9896
