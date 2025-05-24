@@ -3,6 +3,31 @@ entries:
   Filebrowser:
   - apiVersion: v2
     appVersion: 2.32.0
+    created: "2025-05-24T06:15:48.433661438Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 4.0.1
+    description: File Browser is a create-your-own-cloud-kind of software where you
+      can install it on a server, direct it to a path and then access your files through
+      a nice web interface.
+    digest: 5e9107f86bda6f7c519e2aad0fd9d1335927d57d7f1cf91e655877fd526cffe0
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/filebrowser
+    icon: file://icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: Filebrowser
+    sources:
+    - https://github.com/filebrowser/filebrowser
+    - https://filebrowser.org
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/Filebrowser-1.0.3/Filebrowser-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
+    appVersion: 2.32.0
     created: "2025-05-24T06:04:01.208468556Z"
     dependencies:
     - name: common
@@ -1637,4 +1662,4 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/sonarr-1.1.1/sonarr-1.1.1.tgz
     version: 1.1.1
-generated: "2025-05-24T06:04:02.736959584Z"
+generated: "2025-05-24T06:15:50.101437065Z"
