@@ -1,0 +1,19 @@
+apiVersion: v2
+name: Filebrowser
+description: File Browser is a create-your-own-cloud-kind of software where you can install it on a server, direct it to a path and then access your files through a nice web interface.
+type: application
+kubeVersion: ">=1.24.0-0"
+maintainers:
+  - name: Brandan Schmitz
+    email: brandan.schmitz@celestialdata.net
+dependencies:
+  - name: common
+    version: 4.0.1
+    repository: https://bjw-s-labs.github.io/helm-charts/
+home: https://github.com/brandan-schmitz/helm-charts/tree/master/filebrowser
+sources:
+  - https://github.com/filebrowser/filebrowser
+  - https://filebrowser.org
+icon: file://icon.png
+version: 1.0.0
+appVersion: 2.32.0
