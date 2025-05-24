@@ -1,6 +1,6 @@
 # Filebrowser
 
-![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.32.0](https://img.shields.io/badge/AppVersion-2.32.0-informational?style=flat-square)
+![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.32.0](https://img.shields.io/badge/AppVersion-2.32.0-informational?style=flat-square)
 
 File Browser is a create-your-own-cloud-kind of software where you can install it on a server, direct it to a path and then access your files through a nice web interface.
 
@@ -36,7 +36,7 @@ $ helm install Filebrowser brandan-schmitz/Filebrowser
 | configMaps.config.enabled | bool | `true` | Enables or disables the configMap |
 | configMaps.config.labels | object | `{}` | Labels to add to the configMap |
 | configMaps.config.annotations | object | `{}` | Annotations to add to the configMap |
-| configMaps.config.data | object | `{"settings.json":"{\n  \"port\": 80,\n  \"baseURL\": \"\",\n  \"address\": \"\",\n  \"log\": \"stdout\",\n  \"database\": \"/database/filebrowser.db\",\n  \"root\": \"/srv\"\n}\n"}` | configMap data content. Helm template enabled. |
+| configMaps.config.data | object | `{"settings.json":"{\n  \"port\": \"8080\",\n  \"baseURL\": \"\",\n  \"address\": \"\",\n  \"log\": \"stdout\",\n  \"database\": \"/database/filebrowser.db\",\n  \"root\": \"/srv\"\n}\n"}` | configMap data content. Helm template enabled. |
 | service | object | See below | Configure the services for the chart here. Additional services can be added by adding a dictionary key similar to the 'main' service. |
 | service.main.enabled | bool | `true` | Enables or disables the service |
 | service.main.controller | string | `"main"` | Configure which controller this service should target |
@@ -47,7 +47,7 @@ $ helm install Filebrowser brandan-schmitz/Filebrowser
 | service.main.ports | object | See below | Configure the Service port information here. Additional ports can be added by adding a dictionary key similar to the 'http' service. |
 | service.main.ports.http.enabled | bool | `true` | Enables or disables the port |
 | service.main.ports.http.primary | bool | `true` | Make this the primary port (used in probes, notes, etc...) If there is more than 1 service, make sure that only 1 port is marked as primary. |
-| service.main.ports.http.port | int | `80` | The port number |
+| service.main.ports.http.port | int | `8080` | The port number |
 | service.main.ports.http.protocol | string | `"HTTP"` | Port protocol. Support values are `HTTP`, `HTTPS`, `TCP` and `UDP`. HTTP and HTTPS spawn a TCP service and get used for internal URL and name generation |
 | ingress | object | `{}` | Configure the ingresses for the chart here. |
 | persistence | object | See below | Configure persistence for the chart here. Additional items can be added by adding a dictionary key similar to the 'config' key. [[ref]](https://bjw-s-labs.github.io/helm-charts/docs/common-library/common-library-storage) |
