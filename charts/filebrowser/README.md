@@ -1,6 +1,6 @@
 # Filebrowser
 
-![Version: 1.0.1](https://img.shields.io/badge/Version-1.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.32.0](https://img.shields.io/badge/AppVersion-2.32.0-informational?style=flat-square)
+![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.32.0](https://img.shields.io/badge/AppVersion-2.32.0-informational?style=flat-square)
 
 File Browser is a create-your-own-cloud-kind of software where you can install it on a server, direct it to a path and then access your files through a nice web interface.
 
@@ -28,11 +28,15 @@ $ helm install Filebrowser brandan-schmitz/Filebrowser
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| controllers.main.defaultContainerOptions | object | `{"image":{"repository":"filebrowser/filebrowser","tag":"latest"}}` | Set default options for all (init)Containers here Each of these options can be overridden on a container level |
+| controllers.main.defaultContainerOptions | object | `{"image":{"repository":"filebrowser/filebrowser","tag":"s6"}}` | Set default options for all (init)Containers here Each of these options can be overridden on a container level |
 | controllers.main.defaultContainerOptions.image.repository | string | `"filebrowser/filebrowser"` | Override the image repository for the containers |
-| controllers.main.defaultContainerOptions.image.tag | string | `"latest"` | Override the image tag for the containers |
+| controllers.main.defaultContainerOptions.image.tag | string | `"s6"` | Override the image tag for the containers |
 | controllers.main.containers.main.resources | object | `{"limits":{"cpu":"500m","memory":"1024Mi"},"requests":{"cpu":"250m","memory":"512Mi"}}` | Set the resource requests / limits for the container. |
 | configMaps | object | See below | Configure configMaps for the chart here. Additional configMaps can be added by adding a dictionary key similar to the 'config' object. |
+| configMaps.config.enabled | bool | `true` | Enables or disables the configMap |
+| configMaps.config.labels | object | `{}` | Labels to add to the configMap |
+| configMaps.config.annotations | object | `{}` | Annotations to add to the configMap |
+| configMaps.config.data | object | `{"settings.json":"{\n  \"port\": 80,\n  \"baseURL\": \"\",\n  \"address\": \"\",\n  \"log\": \"stdout\",\n  \"database\": \"/database/filebrowser.db\",\n  \"root\": \"/srv\"\n}\n"}` | configMap data content. Helm template enabled. |
 | service | object | See below | Configure the services for the chart here. Additional services can be added by adding a dictionary key similar to the 'main' service. |
 | service.main.enabled | bool | `true` | Enables or disables the service |
 | service.main.controller | string | `"main"` | Configure which controller this service should target |
@@ -48,15 +52,19 @@ $ helm install Filebrowser brandan-schmitz/Filebrowser
 | ingress | object | `{}` | Configure the ingresses for the chart here. |
 | persistence | object | See below | Configure persistence for the chart here. Additional items can be added by adding a dictionary key similar to the 'config' key. [[ref]](https://bjw-s-labs.github.io/helm-charts/docs/common-library/common-library-storage) |
 | persistence.config.enabled | bool | `true` | Enables or disables the persistence item. Defaults to true |
-| persistence.config.type | string | `"persistentVolumeClaim"` | Sets the persistence type Valid options are persistentVolumeClaim, emptyDir, nfs, hostPath, secret, configMap or custom |
-| persistence.config.storageClass | string | `nil` | Storage Class for the config volume. If set to `-`, dynamic provisioning is disabled. If set to something else, the given storageClass is used. If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner. |
-| persistence.config.existingClaim | string | `nil` | If you want to reuse an existing claim, the name of the existing PVC can be passed here. |
-| persistence.config.dataSource | object | `{}` | The optional data source for the persistentVolumeClaim. [[ref]](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#volume-populators-and-data-sources) |
-| persistence.config.dataSourceRef | object | `{}` | The optional volume populator for the persistentVolumeClaim. [[ref]](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#volume-populators-and-data-sources) |
-| persistence.config.accessMode | string | `"ReadWriteOnce"` | AccessMode for the persistent volume. Make sure to select an access mode that is supported by your storage provider! [[ref]](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) |
-| persistence.config.size | string | `"100Mi"` | The amount of storage that is requested for the persistent volume. |
-| persistence.config.retain | bool | `true` | Set to true to retain the PVC upon `helm uninstall` |
-| persistence.config.globalMounts | list | `[{"path":"/database","readOnly":false}]` | Configure mounts to all controllers and containers. |
+| persistence.config.type | string | `"configMap"` | Sets the persistence type Valid options are persistentVolumeClaim, emptyDir, nfs, hostPath, secret, configMap or custom |
+| persistence.config.name | string | `"filebrowser"` | Sets the name of the configMap to mount |
+| persistence.config.globalMounts | list | `[{"path":"/config","readOnly":true}]` | Configure mounts to all controllers and containers. |
+| persistence.database.enabled | bool | `true` | Enables or disables the persistence item. Defaults to true |
+| persistence.database.type | string | `"persistentVolumeClaim"` | Sets the persistence type Valid options are persistentVolumeClaim, emptyDir, nfs, hostPath, secret, configMap or custom |
+| persistence.database.storageClass | string | `nil` | Storage Class for the config volume. If set to `-`, dynamic provisioning is disabled. If set to something else, the given storageClass is used. If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner. |
+| persistence.database.existingClaim | string | `nil` | If you want to reuse an existing claim, the name of the existing PVC can be passed here. |
+| persistence.database.dataSource | object | `{}` | The optional data source for the persistentVolumeClaim. [[ref]](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#volume-populators-and-data-sources) |
+| persistence.database.dataSourceRef | object | `{}` | The optional volume populator for the persistentVolumeClaim. [[ref]](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#volume-populators-and-data-sources) |
+| persistence.database.accessMode | string | `"ReadWriteOnce"` | AccessMode for the persistent volume. Make sure to select an access mode that is supported by your storage provider! [[ref]](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) |
+| persistence.database.size | string | `"100Mi"` | The amount of storage that is requested for the persistent volume. |
+| persistence.database.retain | bool | `true` | Set to true to retain the PVC upon `helm uninstall` |
+| persistence.database.globalMounts | list | `[{"path":"/database","readOnly":false}]` | Configure mounts to all controllers and containers. |
 | persistence.data.enabled | bool | `true` | Enables or disables the persistence item. Defaults to true |
 | persistence.data.type | string | `"persistentVolumeClaim"` | Sets the persistence type Valid options are persistentVolumeClaim, emptyDir, nfs, hostPath, secret, configMap or custom |
 | persistence.data.storageClass | string | `nil` | Storage Class for the config volume. If set to `-`, dynamic provisioning is disabled. If set to something else, the given storageClass is used. If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner. |

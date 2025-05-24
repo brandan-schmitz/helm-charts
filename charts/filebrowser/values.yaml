@@ -9,7 +9,7 @@ controllers:
         # -- Override the image repository for the containers
         repository: filebrowser/filebrowser
         # -- Override the image tag for the containers
-        tag: latest
+        tag: s6
 
     containers:
       main:
@@ -25,25 +25,25 @@ controllers:
 # -- Configure configMaps for the chart here.
 # Additional configMaps can be added by adding a dictionary key similar to the 'config' object.
 # @default -- See below
-configMaps: {}
-  # config:
-  #   # -- Enables or disables the configMap
-  #   enabled: true
-  #   # -- Labels to add to the configMap
-  #   labels: {}
-  #   # -- Annotations to add to the configMap
-  #   annotations: {}
-  #   # -- configMap data content. Helm template enabled.
-  #   data:
-  #     filebrowser.json: |
-  #       {
-  #         "port": 80,
-  #         "baseURL": "",
-  #         "address": "",
-  #         "log": "stdout",
-  #         "database": "/config/database.db",
-  #         "root": "/srv/data"
-  #       }
+configMaps:
+  config:
+    # -- Enables or disables the configMap
+    enabled: true
+    # -- Labels to add to the configMap
+    labels: {}
+    # -- Annotations to add to the configMap
+    annotations: {}
+    # -- configMap data content. Helm template enabled.
+    data:
+      settings.json: |
+        {
+          "port": 80,
+          "baseURL": "",
+          "address": "",
+          "log": "stdout",
+          "database": "/database/filebrowser.db",
+          "root": "/srv"
+        }
 
 
 # -- Configure the services for the chart here.
@@ -146,6 +146,22 @@ ingress:
 # @default -- See below
 persistence:
   config:
+    # -- Enables or disables the persistence item. Defaults to true
+    enabled: true
+
+    # -- Sets the persistence type
+    # Valid options are persistentVolumeClaim, emptyDir, nfs, hostPath, secret, configMap or custom
+    type: configMap
+
+    # -- Sets the name of the configMap to mount
+    name: filebrowser
+
+    # -- Configure mounts to all controllers and containers.
+    globalMounts:
+      - path: /config
+        readOnly: true
+
+  database:
     # -- Enables or disables the persistence item. Defaults to true
     enabled: true
 
