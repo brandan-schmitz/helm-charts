@@ -14,5 +14,5 @@ home: https://github.com/brandan-schmitz/helm-charts/tree/master/restreamer
 sources:
   - https://github.com/datarhei/restreamer
 icon: file://icon.png
-version: 1.0.3
+version: 1.0.4
 appVersion: 2.12.0

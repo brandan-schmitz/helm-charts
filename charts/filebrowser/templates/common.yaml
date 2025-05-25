@@ -9,9 +9,10 @@ global:
 
 controllers:
   main:
-    defaultContainerOptions:
-      image:
-        tag: "{{ default (printf "v%s-s6" .Chart.AppVersion) .Values.controllers.main.containers.main.image.tag }}"
+    containers:
+      main:
+        image:
+          tag: "{{ default (printf "v%s-s6" .Chart.AppVersion) .Values.controllers.main.containers.main.image.tag }}"
 {{ end }}
 {{- end -}}
 {{- $_ := mergeOverwrite .Values (include "app-template.hardcodedValues" . | fromYaml) -}}

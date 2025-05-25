@@ -15,5 +15,5 @@ sources:
   - https://github.com/filebrowser/filebrowser
   - https://filebrowser.org
 icon: file://icon.png
-version: 1.0.4
+version: 1.0.5
 appVersion: 2.32.0
