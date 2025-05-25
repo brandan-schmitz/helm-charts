@@ -11,4 +11,4 @@ helm repo add brandan-schmitz https://brandan-schmitz.github.io/helm-charts/
 
 You can then run `helm search repo brandan-schmitz` to see the charts.
 
-A big thanks to [bjw-s-labs] for all the work on the library chart used to create these helm charts!
+A big thanks to [bjw-s-labs](https://github.com/bjw-s-labs) for all the work on the library chart used to create these helm charts!
