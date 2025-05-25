@@ -3,6 +3,31 @@ entries:
   Filebrowser:
   - apiVersion: v2
     appVersion: 2.32.0
+    created: "2025-05-25T20:56:55.301018511Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 4.0.1
+    description: File Browser is a create-your-own-cloud-kind of software where you
+      can install it on a server, direct it to a path and then access your files through
+      a nice web interface.
+    digest: 489f79d89b8f1368ac819d9a91eb36faeb69334e734457c3b9fa139c4e71acc2
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/filebrowser
+    icon: file://icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: Filebrowser
+    sources:
+    - https://github.com/filebrowser/filebrowser
+    - https://filebrowser.org
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/Filebrowser-1.0.4/Filebrowser-1.0.4.tgz
+    version: 1.0.4
+  - apiVersion: v2
+    appVersion: 2.32.0
     created: "2025-05-24T06:15:48.433661438Z"
     dependencies:
     - name: common
@@ -1342,6 +1367,32 @@ entries:
   restreamer:
   - apiVersion: v2
     appVersion: 2.12.0
+    created: "2025-05-25T20:56:56.278570049Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 4.0.1
+    description: The Restreamer is a complete streaming server solution for self-hosting.
+      It has a visually appealing user interface and no ongoing license costs. Upload
+      your live stream to YouTube, Twitch, Facebook, Vimeo, or other streaming solutions
+      like Wowza. Receive video data from OBS and publish it with the RTMP and SRT
+      server.
+    digest: 8102cb468bcb761f304a74d2b71ba8d517106da4b42495c154d31901bd692ff8
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/restreamer
+    icon: file://icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: restreamer
+    sources:
+    - https://github.com/datarhei/restreamer
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/restreamer-1.0.3/restreamer-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
+    appVersion: 2.12.0
     created: "2025-05-04T02:06:56.260234669Z"
     dependencies:
     - name: common
@@ -1665,6 +1716,31 @@ entries:
   syncthing:
   - apiVersion: v2
     appVersion: 1.29.6
+    created: "2025-05-25T20:56:56.484362405Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 4.0.1
+    description: Syncthing is a continuous file synchronization program. It synchronizes
+      files between two or more computers in real time, safely protected from prying
+      eyes.
+    digest: c21bf513695a779ab1b6b6a4f1d7b6b2fe947380486860a28ae7b2a43a959d4e
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/syncthing
+    icon: file://icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: syncthing
+    sources:
+    - https://github.com/syncthing/syncthing
+    - https://syncthing.net/
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/syncthing-1.0.1/syncthing-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    appVersion: 1.29.6
     created: "2025-05-25T19:21:12.798451171Z"
     dependencies:
     - name: common
@@ -1688,4 +1764,4 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/syncthing-1.0.0/syncthing-1.0.0.tgz
     version: 1.0.0
-generated: "2025-05-25T19:21:12.798555927Z"
+generated: "2025-05-25T20:56:56.48448806Z"
