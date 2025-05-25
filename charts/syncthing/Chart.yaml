@@ -1,0 +1,19 @@
+apiVersion: v2
+name: syncthing
+description: Syncthing is a continuous file synchronization program. It synchronizes files between two or more computers in real time, safely protected from prying eyes.
+type: application
+kubeVersion: ">=1.24.0-0"
+maintainers:
+  - name: Brandan Schmitz
+    email: brandan.schmitz@celestialdata.net
+dependencies:
+  - name: common
+    version: 4.0.1
+    repository: https://bjw-s-labs.github.io/helm-charts/
+home: https://github.com/brandan-schmitz/helm-charts/tree/master/syncthing
+sources:
+  - https://github.com/syncthing/syncthing
+  - https://syncthing.net/
+icon: file://icon.png
+version: 1.0.0
+appVersion: 1.29.6
