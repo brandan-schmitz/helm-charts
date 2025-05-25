@@ -11,8 +11,7 @@ controllers:
   main:
     defaultContainerOptions:
       image:
-        repository: "{{ default (printf "filebrowser/filebrowser") .Values.controllers.main.defaultContainerOptions.image.repository }}"
-        tag: "{{ default (printf "v%s-s6" .Chart.AppVersion) .Values.controllers.main.defaultContainerOptions.image.tag }}"
+        tag: "{{ default (printf "v%s-s6" .Chart.AppVersion) .Values.controllers.main.containers.main.image.tag }}"
 {{ end }}
 {{- end -}}
 {{- $_ := mergeOverwrite .Values (include "app-template.hardcodedValues" . | fromYaml) -}}

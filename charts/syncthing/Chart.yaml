@@ -15,5 +15,5 @@ sources:
   - https://github.com/syncthing/syncthing
   - https://syncthing.net/
 icon: file://icon.png
-version: 1.0.0
+version: 1.0.1
 appVersion: 1.29.6

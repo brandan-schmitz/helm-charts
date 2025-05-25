@@ -2,17 +2,16 @@
 
 controllers:
   main:
-    # -- Set default options for all (init)Containers here
-    # Each of these options can be overridden on a container level
-    defaultContainerOptions:
-      image:
-        # -- Override the image repository for the containers
-        repository: datarhei/restreamer
-        # -- Override the image tag for the containers
-        tag: latest
-
     containers:
       main:
+        image:
+          # -- image repository
+          repository: datarhei/restreamer
+          # -- image tag
+          tag:
+          # -- image pull policy
+          pullPolicy: IfNotPresent
+
         # -- Set the resource requests / limits for the container.
         resources:
           limits:
@@ -21,6 +20,8 @@ controllers:
           requests:
             cpu: 250m
             memory: 512Mi
+
+
 # -- Configure the services for the chart here.
 # Additional services can be added by adding a dictionary key similar to the 'main' service.
 # @default -- See below

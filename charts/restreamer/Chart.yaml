@@ -8,11 +8,11 @@ maintainers:
     email: brandan.schmitz@celestialdata.net
 dependencies:
   - name: common
-    version: 3.7.3
+    version: 4.0.1
     repository: https://bjw-s-labs.github.io/helm-charts/
 home: https://github.com/brandan-schmitz/helm-charts/tree/master/restreamer
 sources:
   - https://github.com/datarhei/restreamer
 icon: file://icon.png
-version: 1.0.2
+version: 1.0.3
 appVersion: 2.12.0

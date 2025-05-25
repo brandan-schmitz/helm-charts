@@ -2,17 +2,15 @@
 
 controllers:
   main:
-    # -- Set default options for all (init)Containers here
-    # Each of these options can be overridden on a container level
-    defaultContainerOptions:
-      image:
-        # -- Override the image repository for the containers
-        repository: filebrowser/filebrowser
-        # -- Override the image tag for the containers
-        tag: s6
-
     containers:
       main:
+        image:
+          # -- image repository
+          repository: filebrowser/filebrowser
+          # -- image tag
+          tag:
+          # -- image pull policy
+          pullPolicy: IfNotPresent
         # -- Set the resource requests / limits for the container.
         resources:
           limits:

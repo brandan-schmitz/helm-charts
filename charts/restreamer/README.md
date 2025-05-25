@@ -1,6 +1,6 @@
 # restreamer
 
-![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.12.0](https://img.shields.io/badge/AppVersion-2.12.0-informational?style=flat-square)
+![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.12.0](https://img.shields.io/badge/AppVersion-2.12.0-informational?style=flat-square)
 
 The Restreamer is a complete streaming server solution for self-hosting. It has a visually appealing user interface and no ongoing license costs. Upload your live stream to YouTube, Twitch, Facebook, Vimeo, or other streaming solutions like Wowza. Receive video data from OBS and publish it with the RTMP and SRT server.
 
@@ -27,9 +27,9 @@ $ helm install restreamer brandan-schmitz/restreamer
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| controllers.main.defaultContainerOptions | object | `{"image":{"repository":"datarhei/restreamer","tag":"latest"}}` | Set default options for all (init)Containers here Each of these options can be overridden on a container level |
-| controllers.main.defaultContainerOptions.image.repository | string | `"datarhei/restreamer"` | Override the image repository for the containers |
-| controllers.main.defaultContainerOptions.image.tag | string | `"latest"` | Override the image tag for the containers |
+| controllers.main.containers.main.image.repository | string | `"datarhei/restreamer"` | image repository |
+| controllers.main.containers.main.image.tag | string | `nil` | image tag |
+| controllers.main.containers.main.image.pullPolicy | string | `"IfNotPresent"` | image pull policy |
 | controllers.main.containers.main.resources | object | `{"limits":{"cpu":"500m","memory":"1024Mi"},"requests":{"cpu":"250m","memory":"512Mi"}}` | Set the resource requests / limits for the container. |
 | service | object | See below | Configure the services for the chart here. Additional services can be added by adding a dictionary key similar to the 'main' service. |
 | service.main.enabled | bool | `true` | Enables or disables the service |

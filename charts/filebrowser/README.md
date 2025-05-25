@@ -1,6 +1,6 @@
 # Filebrowser
 
-![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.32.0](https://img.shields.io/badge/AppVersion-2.32.0-informational?style=flat-square)
+![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.32.0](https://img.shields.io/badge/AppVersion-2.32.0-informational?style=flat-square)
 
 File Browser is a create-your-own-cloud-kind of software where you can install it on a server, direct it to a path and then access your files through a nice web interface.
 
@@ -28,9 +28,9 @@ $ helm install Filebrowser brandan-schmitz/Filebrowser
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| controllers.main.defaultContainerOptions | object | `{"image":{"repository":"filebrowser/filebrowser","tag":"s6"}}` | Set default options for all (init)Containers here Each of these options can be overridden on a container level |
-| controllers.main.defaultContainerOptions.image.repository | string | `"filebrowser/filebrowser"` | Override the image repository for the containers |
-| controllers.main.defaultContainerOptions.image.tag | string | `"s6"` | Override the image tag for the containers |
+| controllers.main.containers.main.image.repository | string | `"filebrowser/filebrowser"` | image repository |
+| controllers.main.containers.main.image.tag | string | `nil` | image tag |
+| controllers.main.containers.main.image.pullPolicy | string | `"IfNotPresent"` | image pull policy |
 | controllers.main.containers.main.resources | object | `{"limits":{"cpu":"500m","memory":"1024Mi"},"requests":{"cpu":"250m","memory":"512Mi"}}` | Set the resource requests / limits for the container. |
 | configMaps | object | See below | Configure configMaps for the chart here. Additional configMaps can be added by adding a dictionary key similar to the 'config' object. |
 | configMaps.config.enabled | bool | `true` | Enables or disables the configMap |
