@@ -17,3 +17,4 @@ ignore:
   - name: blackhole-manager
   - name: env-injector-webhook
   - name: restreamer
+  - name: octopus-deploy
