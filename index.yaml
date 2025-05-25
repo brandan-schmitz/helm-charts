@@ -1662,4 +1662,30 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/sonarr-1.1.1/sonarr-1.1.1.tgz
     version: 1.1.1
-generated: "2025-05-24T06:15:50.101437065Z"
+  syncthing:
+  - apiVersion: v2
+    appVersion: 1.29.6
+    created: "2025-05-25T19:21:12.798451171Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 4.0.1
+    description: Syncthing is a continuous file synchronization program. It synchronizes
+      files between two or more computers in real time, safely protected from prying
+      eyes.
+    digest: 0a1fe6cc80a906dfcd4a1cd3b4a41e7f5864d623fb7a8bfa1a59ca19ecb04aad
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/syncthing
+    icon: file://icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: syncthing
+    sources:
+    - https://github.com/syncthing/syncthing
+    - https://syncthing.net/
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/syncthing-1.0.0/syncthing-1.0.0.tgz
+    version: 1.0.0
+generated: "2025-05-25T19:21:12.798555927Z"
