@@ -14,6 +14,6 @@ home: https://github.com/brandan-schmitz/helm-charts/tree/master/plex
 sources:
   - https://github.com/linuxserver/docker-plex
   - https://plex.tv
-icon: file://icon.png
-version: 1.3.2
-appVersion: 1.41.6
+icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/plex/icon.png
+version: 1.3.3
+appVersion: 1.41.7

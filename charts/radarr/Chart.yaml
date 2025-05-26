@@ -14,6 +14,6 @@ home: https://github.com/brandan-schmitz/helm-charts/tree/master/radarr
 sources:
   - https://github.com/linuxserver/docker-radarr
   - https://github.com/Radarr/Radarr
-icon: file://icon.png
-version: 2.8.0
-appVersion: 5.22.4.9896
+icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/radarr/icon.png
+version: 2.9.0
+appVersion: 5.23.3.9987

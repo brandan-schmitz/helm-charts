@@ -13,6 +13,6 @@ dependencies:
 home: https://github.com/brandan-schmitz/helm-charts/tree/master/blackhole-manager
 sources:
   - https://github.com/brandan-schmitz/blackhole-manager
-icon: file://icon.png
-version: 1.3.2
+icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/blackhole-manager/icon.png
+version: 1.3.3
 appVersion: v1.1.2

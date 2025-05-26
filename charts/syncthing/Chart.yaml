@@ -14,6 +14,6 @@ home: https://github.com/brandan-schmitz/helm-charts/tree/master/syncthing
 sources:
   - https://github.com/syncthing/syncthing
   - https://syncthing.net/
-icon: file://icon.png
-version: 1.0.2
+icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/syncthing/icon.png
+version: 1.0.3
 appVersion: 1.29.6

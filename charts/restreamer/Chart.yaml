@@ -13,6 +13,6 @@ dependencies:
 home: https://github.com/brandan-schmitz/helm-charts/tree/master/restreamer
 sources:
   - https://github.com/datarhei/restreamer
-icon: file://icon.png
-version: 1.0.4
+icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/restreamer/icon.png
+version: 1.0.5
 appVersion: 2.12.0

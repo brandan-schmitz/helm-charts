@@ -1,6 +1,6 @@
 # aria2-pro
 
-![Version: 1.1.2](https://img.shields.io/badge/Version-1.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 202209060423](https://img.shields.io/badge/AppVersion-202209060423-informational?style=flat-square)
+![Version: 1.1.3](https://img.shields.io/badge/Version-1.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 202209060423](https://img.shields.io/badge/AppVersion-202209060423-informational?style=flat-square)
 
 A perfect Aria2 Docker image. Out of the box, just add download tasks and don't need to think about anything else.
 
