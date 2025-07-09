@@ -1,6 +1,6 @@
 # bitmagnet
 
-![Version: 1.0.1](https://img.shields.io/badge/Version-1.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.10.0](https://img.shields.io/badge/AppVersion-0.10.0-informational?style=flat-square)
+![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.10.0](https://img.shields.io/badge/AppVersion-0.10.0-informational?style=flat-square)
 
 A self-hosted BitTorrent indexer, DHT crawler, content classifier and torrent search engine with web UI, GraphQL API and Servarr stack integration.
 
@@ -28,31 +28,40 @@ $ helm install bitmagnet brandan-schmitz/bitmagnet
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| controllers.bitmagnet.initContainers[0].name | string | `"wait-for-postgres"` |  |
-| controllers.bitmagnet.initContainers[0].image | string | `"postgres:16-alpine"` |  |
-| controllers.bitmagnet.initContainers[0].command[0] | string | `"sh"` |  |
-| controllers.bitmagnet.initContainers[0].command[1] | string | `"-c"` |  |
-| controllers.bitmagnet.initContainers[0].command[2] | string | `"until pg_isready -h \"{{ .Release.Name }}-postgres\" -p 5432; do echo \"waiting for postgres\"; sleep 2; done;\n"` |  |
-| controllers.bitmagnet.containers.main.image.repository | string | `"ghcr.io/bitmagnet-io/bitmagnet"` | image repository |
-| controllers.bitmagnet.containers.main.image.tag | string | `nil` | image tag (defaults to version defined in the chart) |
-| controllers.bitmagnet.containers.main.image.pullPolicy | string | `"IfNotPresent"` | image pull policy |
-| controllers.bitmagnet.containers.main.command[0] | string | `"worker"` |  |
-| controllers.bitmagnet.containers.main.command[1] | string | `"run"` |  |
-| controllers.bitmagnet.containers.main.command[2] | string | `"--all"` |  |
-| controllers.bitmagnet.containers.main.env | list | `[{"name":"POSTGRES_HOST","value":"{{ .Release.Name }}-postgres"},{"name":"POSTGRES_DB","value":"bitmagnet"}]` | Environment variables. Template enabled. |
-| controllers.bitmagnet.containers.main.envFrom | list | `[{"secret":"postgres-password"}]` | Secrets and/or ConfigMaps that will be loaded as environment variables. |
-| controllers.bitmagnet.containers.main.resources | object | `{"limits":{"cpu":"500m","memory":"1024Mi"},"requests":{"cpu":"250m","memory":"512Mi"}}` | Set the resource requests / limits for the container. |
+| controllers.bitmagnet.initContainers.wait-for-postgres.image.repository | string | `"postgres"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.image.tag | string | `"16-alpine"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.image.pullPolicy | string | `"IfNotPresent"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.command[0] | string | `"sh"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.command[1] | string | `"-c"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.command[2] | string | `"until pg_isready -h $POSTGRES_HOST -p 5432; do echo \"waiting for postgres\"; sleep 2; done;\n"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.env[0].name | string | `"POSTGRES_HOST"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.env[0].value | string | `"{{ .Release.Name }}-postgres"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.env[1].name | string | `"POSTGRES_DB"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.env[1].value | string | `"bitmagnet"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.env[2].name | string | `"POSTGRES_USER"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.env[2].valueFrom.secretKeyRef.name | string | `"{{ .Release.Name }}-postgres"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.env[2].valueFrom.secretKeyRef.key | string | `"username"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.env[3].name | string | `"POSTGRES_PASSWORD"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.env[3].valueFrom.secretKeyRef.name | string | `"{{ .Release.Name }}-postgres"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.env[3].valueFrom.secretKeyRef.key | string | `"password"` |  |
+| controllers.bitmagnet.containers.bitmagnet.image.repository | string | `"ghcr.io/bitmagnet-io/bitmagnet"` | image repository |
+| controllers.bitmagnet.containers.bitmagnet.image.tag | string | `nil` | image tag (defaults to version defined in the chart) |
+| controllers.bitmagnet.containers.bitmagnet.image.pullPolicy | string | `"IfNotPresent"` | image pull policy |
+| controllers.bitmagnet.containers.bitmagnet.args[0] | string | `"worker"` |  |
+| controllers.bitmagnet.containers.bitmagnet.args[1] | string | `"run"` |  |
+| controllers.bitmagnet.containers.bitmagnet.args[2] | string | `"--all"` |  |
+| controllers.bitmagnet.containers.bitmagnet.env | list | `[{"name":"POSTGRES_HOST","value":"{{ .Release.Name }}-postgres"},{"name":"POSTGRES_NAME","value":"bitmagnet"},{"name":"POSTGRES_USER","valueFrom":{"secretKeyRef":{"key":"username","name":"{{ .Release.Name }}-postgres"}}},{"name":"POSTGRES_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"{{ .Release.Name }}-postgres"}}}]` | Environment variables. Template enabled. |
+| controllers.bitmagnet.containers.bitmagnet.resources | object | `{}` | Set the resource requests / limits for the container. |
 | controllers.postgres.enabled | bool | `true` | enable the controller. |
 | controllers.postgres.type | string | `"statefulset"` | Set the controller type. Valid options are deployment, daemonset, statefulset, cronjob or job |
 | controllers.postgres.replicas | int | `1` | Number of desired pods. When using a HorizontalPodAutoscaler, set this to `null`. |
 | controllers.postgres.strategy | string | `"OnDelete"` | Set the controller upgrade strategy |
-| controllers.postgres.statefulset | object | `{"volumeClaimTemplates":[{"accessMode":"ReadWriteOnce","annotations":{},"globalMounts":[{"path":"/var/lib/postgresql/data"}],"labels":{},"name":"data","size":"80Gi"}]}` | StatefulSet configuration. |
-| controllers.postgres.statefulset.volumeClaimTemplates | list | `[{"accessMode":"ReadWriteOnce","annotations":{},"globalMounts":[{"path":"/var/lib/postgresql/data"}],"labels":{},"name":"data","size":"80Gi"}]` | Used to create individual disks for each instance. |
+| controllers.postgres.statefulset | object | `{"volumeClaimTemplates":[{"accessMode":"ReadWriteOnce","annotations":{},"globalMounts":[{"path":"/var/lib/postgresql"}],"labels":{},"name":"data","size":"80Gi"}]}` | StatefulSet configuration. |
+| controllers.postgres.statefulset.volumeClaimTemplates | list | `[{"accessMode":"ReadWriteOnce","annotations":{},"globalMounts":[{"path":"/var/lib/postgresql"}],"labels":{},"name":"data","size":"80Gi"}]` | Used to create individual disks for each instance. |
 | controllers.postgres.containers.main.image.repository | string | `"postgres"` | image repository |
 | controllers.postgres.containers.main.image.tag | string | `"16-alpine"` | image tag |
 | controllers.postgres.containers.main.image.pullPolicy | string | `"IfNotPresent"` | image pull policy |
-| controllers.postgres.containers.main.env | list | `[{"name":"PGUSER","value":"postgres"},{"name":"POSTGRES_DB","value":"bitmagnet"}]` | Environment variables. Template enabled. |
-| controllers.postgres.containers.main.envFrom | list | `[{"secret":"postgres-password"}]` | Secrets and/or ConfigMaps that will be loaded as environment variables. |
+| controllers.postgres.containers.main.env | list | `[{"name":"POSTGRES_HOST","value":"{{ .Release.Name }}-postgres"},{"name":"POSTGRES_DB","value":"bitmagnet"},{"name":"POSTGRES_USER","valueFrom":{"secretKeyRef":{"key":"username","name":"{{ .Release.Name }}-postgres"}}},{"name":"POSTGRES_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"{{ .Release.Name }}-postgres"}}}]` | Environment variables. Template enabled. |
 | controllers.postgres.containers.main.probes | object | `{"liveness":{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","pg_isready -U \"$PGUSER\" -d \"$POSTGRES_DB\" -h localhost\n"]},"failureThreshold":3,"initialDelaySeconds":60,"periodSeconds":30,"timeoutSeconds":5}},"readiness":{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","psql -U \"$PGUSER\" -d \"$POSTGRES_DB\" -c \"SELECT 1\"\n"]},"failureThreshold":3,"initialDelaySeconds":20,"periodSeconds":15,"timeoutSeconds":5}},"startup":{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","pg_isready -U \"$PGUSER\" -d \"$POSTGRES_DB\" -h localhost\n"]},"failureThreshold":12,"initialDelaySeconds":10,"periodSeconds":10,"timeoutSeconds":5}}}` | [[ref]](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) |
 | controllers.postgres.containers.main.probes.liveness | object | See below | Liveness probe configuration |
 | controllers.postgres.containers.main.probes.liveness.enabled | bool | `true` | Enable the liveness probe |
@@ -68,8 +77,9 @@ $ helm install bitmagnet brandan-schmitz/bitmagnet
 | controllers.postgres.containers.main.probes.startup.spec | object | See below | The spec field contains the values for the default startupProbe. |
 | controllers.postgres.containers.main.resources | object | `{}` | Set the resource requests / limits for the container. |
 | secrets | object | See below | Use this to populate secrets with the values you specify. Be aware that these values are not encrypted by default, and could therefore visible to anybody with access to the values.yaml file. |
-| secrets.postgres-password.enabled | bool | `true` | Enables or disables the Secret |
-| secrets.postgres-password.stringData | object | `{"POSTGRES_PASSWORD":"K8Y763jYxsFz"}` | Secret stringData content. Helm template enabled. |
+| secrets.postgres.enabled | bool | `true` | Enables or disables the Secret |
+| secrets.postgres.suffix | string | `"postgres"` | Sets the suffix of the secret otherwise it will just be the release name |
+| secrets.postgres.stringData | object | `{"password":"K8Y763jYxsFz","username":"postgres"}` | Secret stringData content. Helm template enabled. |
 | service | object | See below | Configure the services for the chart here. Additional services can be added by adding a dictionary key similar to the 'main' service. |
 | service.bitmagnet.enabled | bool | `true` | Enables or disables the service |
 | service.bitmagnet.controller | string | `"bitmagnet"` | Configure which controller this service should target |
@@ -84,17 +94,14 @@ $ helm install bitmagnet brandan-schmitz/bitmagnet
 | service.bitmagnet.ports.http.port | int | `80` | The port number |
 | service.bitmagnet.ports.http.protocol | string | `"HTTP"` | Port protocol. Support values are `HTTP`, `HTTPS`, `TCP` and `UDP`. HTTP and HTTPS spawn a TCP service and get used for internal URL and name generation |
 | service.bitmagnet.ports.http.targetPort | int | `3333` | Specify a service targetPort if you wish to differ the service port from the application port. |
-| service.bitmagnet.ports.http.nodePort | int | `3333` | Specify the nodePort value for the LoadBalancer and NodePort service types. [[ref]](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport) |
 | service.bitmagnet.ports.bittorrent-tcp.enabled | bool | `true` | Enables or disables the port |
 | service.bitmagnet.ports.bittorrent-tcp.primary | bool | `true` | Make this the primary port |
 | service.bitmagnet.ports.bittorrent-tcp.port | int | `3334` | The port number |
 | service.bitmagnet.ports.bittorrent-tcp.protocol | string | `"TCP"` | Port protocol. Support values are `HTTP`, `HTTPS`, `TCP` and `UDP`. HTTP and HTTPS spawn a TCP service and get used for internal URL and name generation |
-| service.bitmagnet.ports.bittorrent-tcp.nodePort | int | `3333` | Specify the nodePort value for the LoadBalancer and NodePort service types. [[ref]](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport) |
 | service.bitmagnet.ports.bittorrent-udp.enabled | bool | `true` | Enables or disables the port |
 | service.bitmagnet.ports.bittorrent-udp.primary | bool | `true` | Make this the primary port |
 | service.bitmagnet.ports.bittorrent-udp.port | int | `3334` | The port number |
 | service.bitmagnet.ports.bittorrent-udp.protocol | string | `"UDP"` | Port protocol. Support values are `HTTP`, `HTTPS`, `TCP` and `UDP`. HTTP and HTTPS spawn a TCP service and get used for internal URL and name generation |
-| service.bitmagnet.ports.bittorrent-udp.nodePort | int | `3333` | Specify the nodePort value for the LoadBalancer and NodePort service types. [[ref]](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport) |
 | service.postgres.enabled | bool | `true` | Enables or disables the service |
 | service.postgres.controller | string | `"postgres"` | Configure which controller this service should target |
 | service.postgres.primary | bool | `true` | Make this the primary service for this controller (used in probes, notes, etc...). If there is more than 1 service targeting the controller, make sure that only 1 service is marked as primary. |
@@ -107,10 +114,10 @@ $ helm install bitmagnet brandan-schmitz/bitmagnet
 | service.postgres.ports.postgres.primary | bool | `true` | Make this the primary port |
 | service.postgres.ports.postgres.port | int | `5432` | The port number |
 | service.postgres.ports.postgres.protocol | string | `"HTTP"` | Port protocol. Support values are `HTTP`, `HTTPS`, `TCP` and `UDP`. HTTP and HTTPS spawn a TCP service and get used for internal URL and name generation |
-| service.postgres.ports.postgres.nodePort | int | `5432` | Specify the nodePort value for the LoadBalancer and NodePort service types. [[ref]](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport) |
 | ingress | object | `{}` | Configure the ingresses for the chart here. |
 | persistence | object | See below | Configure persistence for the chart here. Additional items can be added by adding a dictionary key similar to the 'config' key. [[ref]](https://bjw-s-labs.github.io/helm-charts/docs/common-library/common-library-storage) |
 | persistence.bitmagnet-config.enabled | bool | `true` | Enables or disables the persistence item. Defaults to true |
+| persistence.bitmagnet-config.suffix | string | `"config"` | The sufix to append to the release name for this item. |
 | persistence.bitmagnet-config.type | string | `"persistentVolumeClaim"` | Sets the persistence type Valid options are persistentVolumeClaim, emptyDir, nfs, hostPath, secret, configMap or custom |
 | persistence.bitmagnet-config.storageClass | string | `nil` | Storage Class for the config volume. If set to `-`, dynamic provisioning is disabled. If set to something else, the given storageClass is used. If undefined (the default) or set to null, no storageClassName spec is set, choosing the default provisioner. |
 | persistence.bitmagnet-config.existingClaim | string | `nil` | If you want to reuse an existing claim, the name of the existing PVC can be passed here. |

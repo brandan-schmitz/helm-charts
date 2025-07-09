@@ -3,17 +3,36 @@
 controllers:
   bitmagnet:
     initContainers:
-      - name: wait-for-postgres
-        image: postgres:16-alpine
+      wait-for-postgres:
+        image:
+          repository: postgres
+          tag: 16-alpine
+          pullPolicy: IfNotPresent
         command:
           - sh
           - -c
           - >
-            until pg_isready -h "{{ .Release.Name }}-postgres" -p 5432;
+            until pg_isready -h $POSTGRES_HOST -p 5432;
             do echo "waiting for postgres"; sleep 2;
             done;
+        env:
+          - name: POSTGRES_HOST
+            value: '{{ .Release.Name }}-postgres'
+          - name: POSTGRES_DB
+            value: bitmagnet
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: '{{ .Release.Name }}-postgres'
+                key: username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: '{{ .Release.Name }}-postgres'
+                key: password
+
     containers:
-      main:
+      bitmagnet:
         image:
           # -- image repository
           repository: ghcr.io/bitmagnet-io/bitmagnet
@@ -22,7 +41,7 @@ controllers:
           # -- image pull policy
           pullPolicy: IfNotPresent
 
-        command:
+        args:
           - worker
           - run
           - --all
@@ -31,21 +50,27 @@ controllers:
         env:
           - name: POSTGRES_HOST
             value: '{{ .Release.Name }}-postgres'
-          - name: POSTGRES_DB
+          - name: POSTGRES_NAME
             value: bitmagnet
-
-        # -- Secrets and/or ConfigMaps that will be loaded as environment variables.
-        envFrom:
-          - secret: postgres-password
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: '{{ .Release.Name }}-postgres'
+                key: username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: '{{ .Release.Name }}-postgres'
+                key: password
 
         # -- Set the resource requests / limits for the container.
-        resources:
-          limits:
-            cpu: 500m
-            memory: 1024Mi
-          requests:
-            cpu: 250m
-            memory: 512Mi
+        resources: {}
+          # limits:
+          #   cpu: 500m
+          #   memory: 1024Mi
+          # requests:
+          #   cpu: 250m
+          #   memory: 512Mi
 
   postgres:
     # -- enable the controller.
@@ -67,7 +92,7 @@ controllers:
         labels: {}
         annotations: {}
         globalMounts:
-          - path: /var/lib/postgresql/data
+          - path: /var/lib/postgresql
         accessMode: "ReadWriteOnce"
         size: 80Gi
         # -- If set to `-`, dynamic provisioning is disabled.
@@ -87,14 +112,20 @@ controllers:
 
         # -- Environment variables. Template enabled.
         env:
-          - name: PGUSER
-            value: postgres
+          - name: POSTGRES_HOST
+            value: '{{ .Release.Name }}-postgres'
           - name: POSTGRES_DB
             value: bitmagnet
-
-        # -- Secrets and/or ConfigMaps that will be loaded as environment variables.
-        envFrom:
-          - secret: postgres-password
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: '{{ .Release.Name }}-postgres'
+                key: username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: '{{ .Release.Name }}-postgres'
+                key: password
 
         # -- Probe configuration
         # -- [[ref]](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)
@@ -180,12 +211,15 @@ controllers:
 # to anybody with access to the values.yaml file.
 # @default -- See below
 secrets:
-  postgres-password:
+  postgres:
     # -- Enables or disables the Secret
     enabled: true
+    # -- Sets the suffix of the secret otherwise it will just be the release name
+    suffix: postgres
     # -- Secret stringData content. Helm template enabled.
     stringData:
-      POSTGRES_PASSWORD: K8Y763jYxsFz
+      username: postgres
+      password: K8Y763jYxsFz
 
 
 # -- Configure the services for the chart here.
@@ -238,10 +272,6 @@ service:
         # -- Specify a service targetPort if you wish to differ the service port from the application port.
         targetPort: 3333
 
-        # -- Specify the nodePort value for the LoadBalancer and NodePort service types.
-        # [[ref]](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)
-        nodePort: 3333
-
       bittorrent-tcp:
         # -- Enables or disables the port
         enabled: true
@@ -257,10 +287,6 @@ service:
         # HTTP and HTTPS spawn a TCP service and get used for internal URL and name generation
         protocol: TCP
 
-        # -- Specify the nodePort value for the LoadBalancer and NodePort service types.
-        # [[ref]](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)
-        nodePort: 3333
-
       bittorrent-udp:
         # -- Enables or disables the port
         enabled: true
@@ -275,10 +301,6 @@ service:
         # Support values are `HTTP`, `HTTPS`, `TCP` and `UDP`.
         # HTTP and HTTPS spawn a TCP service and get used for internal URL and name generation
         protocol: UDP
-
-        # -- Specify the nodePort value for the LoadBalancer and NodePort service types.
-        # [[ref]](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)
-        nodePort: 3333
 
   postgres:
     # -- Enables or disables the service
@@ -322,11 +344,6 @@ service:
         # Support values are `HTTP`, `HTTPS`, `TCP` and `UDP`.
         # HTTP and HTTPS spawn a TCP service and get used for internal URL and name generation
         protocol: HTTP
-
-        # -- Specify the nodePort value for the LoadBalancer and NodePort service types.
-        # [[ref]](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)
-        nodePort: 5432
-
 
 # -- Configure the ingresses for the chart here.
 ingress:
@@ -386,6 +403,9 @@ persistence:
   bitmagnet-config:
     # -- Enables or disables the persistence item. Defaults to true
     enabled: true
+
+    # -- The sufix to append to the release name for this item.
+    suffix: config
 
     # -- Sets the persistence type
     # Valid options are persistentVolumeClaim, emptyDir, nfs, hostPath, secret, configMap or custom

@@ -8,11 +8,11 @@ global:
   nameOverride: "{{ .Release.Name }}"
 
 controllers:
-  main:
+  bitmagnet:
     containers:
-      main:
+      bitmagnet:
         image:
-          tag: "{{ default (printf "v%s" .Chart.AppVersion) .Values.controllers.bitmagnet.containers.main.image.tag }}"
+          tag: "{{ default (printf "v%s" .Chart.AppVersion) .Values.controllers.bitmagnet.containers.bitmagnet.image.tag }}"
 {{ end }}
 {{- end -}}
 {{- $_ := mergeOverwrite .Values (include "app-template.hardcodedValues" . | fromYaml) -}}
