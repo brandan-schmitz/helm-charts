@@ -252,6 +252,30 @@ entries:
   bitmagnet:
   - apiVersion: v2
     appVersion: 0.10.0
+    created: "2025-07-09T23:55:16.815354435Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 4.1.2
+    description: A self-hosted BitTorrent indexer, DHT crawler, content classifier
+      and torrent search engine with web UI, GraphQL API and Servarr stack integration.
+    digest: eac94e3b2343a8b8c6dd217a5552a00d42bc53c0e5582d79e1e56e375d1c3940
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/bitmagnet
+    icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/bitmagnet/icon.png
+    kubeVersion: '>=1.28.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: bitmagnet
+    sources:
+    - https://github.com/bitmagnet-io/bitmagnet
+    - https://bitmagnet.io/
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/bitmagnet-1.0.3/bitmagnet-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
+    appVersion: 0.10.0
     created: "2025-07-09T23:47:23.443827236Z"
     dependencies:
     - name: common
@@ -2208,4 +2232,4 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/syncthing-1.0.0/syncthing-1.0.0.tgz
     version: 1.0.0
-generated: "2025-07-09T23:47:24.752053365Z"
+generated: "2025-07-09T23:55:18.203913752Z"
