@@ -12,7 +12,7 @@ controllers:
     containers:
       main:
         image:
-          tag: "{{ default (printf "v%s" .Chart.AppVersion) .Values.controllers.main.containers.main.image.tag }}"
+          tag: "{{ default (printf "v%s" .Chart.AppVersion) .Values.controllers.bitmagnet.containers.main.image.tag }}"
 {{ end }}
 {{- end -}}
 {{- $_ := mergeOverwrite .Values (include "app-template.hardcodedValues" . | fromYaml) -}}
