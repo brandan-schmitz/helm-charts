@@ -249,6 +249,31 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/aria2-pro-1.1.1/aria2-pro-1.1.1.tgz
     version: 1.1.1
+  bitmagnet:
+  - apiVersion: v2
+    appVersion: 0.10.0
+    created: "2025-07-09T22:30:27.15892378Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 4.1.2
+    description: A self-hosted BitTorrent indexer, DHT crawler, content classifier
+      and torrent search engine with web UI, GraphQL API and Servarr stack integration.
+    digest: 1e4c77d0e0d4e1c08788a4cbb46061f853acb62a2a3fea2d6277a7c8684a2ea6
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/bitmagnet
+    icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/bitmagnet/icon.png
+    kubeVersion: '>=1.28.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: bitmagnet
+    sources:
+    - https://github.com/bitmagnet-io/bitmagnet
+    - https://bitmagnet.io/
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/bitmagnet-1.0.0/bitmagnet-1.0.0.tgz
+    version: 1.0.0
   blackhole-manager:
   - apiVersion: v2
     appVersion: v1.1.2
@@ -2135,4 +2160,4 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/syncthing-1.0.0/syncthing-1.0.0.tgz
     version: 1.0.0
-generated: "2025-05-26T01:14:24.433459874Z"
+generated: "2025-07-09T22:30:28.467314121Z"
