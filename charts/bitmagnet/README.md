@@ -1,6 +1,6 @@
 # bitmagnet
 
-![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.10.0](https://img.shields.io/badge/AppVersion-0.10.0-informational?style=flat-square)
+![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.10.0](https://img.shields.io/badge/AppVersion-0.10.0-informational?style=flat-square)
 
 A self-hosted BitTorrent indexer, DHT crawler, content classifier and torrent search engine with web UI, GraphQL API and Servarr stack integration.
 
@@ -39,18 +39,18 @@ $ helm install bitmagnet brandan-schmitz/bitmagnet
 | controllers.bitmagnet.initContainers.wait-for-postgres.env[1].name | string | `"POSTGRES_DB"` |  |
 | controllers.bitmagnet.initContainers.wait-for-postgres.env[1].value | string | `"bitmagnet"` |  |
 | controllers.bitmagnet.initContainers.wait-for-postgres.env[2].name | string | `"POSTGRES_USER"` |  |
-| controllers.bitmagnet.initContainers.wait-for-postgres.env[2].valueFrom.secretKeyRef.name | string | `"{{ .Release.Name }}-postgres"` |  |
-| controllers.bitmagnet.initContainers.wait-for-postgres.env[2].valueFrom.secretKeyRef.key | string | `"username"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.env[2].valueFrom.secretKeyRef.name | string | `"{{ .Release.Name }}-secrets"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.env[2].valueFrom.secretKeyRef.key | string | `"postgres-username"` |  |
 | controllers.bitmagnet.initContainers.wait-for-postgres.env[3].name | string | `"POSTGRES_PASSWORD"` |  |
-| controllers.bitmagnet.initContainers.wait-for-postgres.env[3].valueFrom.secretKeyRef.name | string | `"{{ .Release.Name }}-postgres"` |  |
-| controllers.bitmagnet.initContainers.wait-for-postgres.env[3].valueFrom.secretKeyRef.key | string | `"password"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.env[3].valueFrom.secretKeyRef.name | string | `"{{ .Release.Name }}-secrets"` |  |
+| controllers.bitmagnet.initContainers.wait-for-postgres.env[3].valueFrom.secretKeyRef.key | string | `"postgres-password"` |  |
 | controllers.bitmagnet.containers.bitmagnet.image.repository | string | `"ghcr.io/bitmagnet-io/bitmagnet"` | image repository |
 | controllers.bitmagnet.containers.bitmagnet.image.tag | string | `nil` | image tag (defaults to version defined in the chart) |
 | controllers.bitmagnet.containers.bitmagnet.image.pullPolicy | string | `"IfNotPresent"` | image pull policy |
 | controllers.bitmagnet.containers.bitmagnet.args[0] | string | `"worker"` |  |
 | controllers.bitmagnet.containers.bitmagnet.args[1] | string | `"run"` |  |
 | controllers.bitmagnet.containers.bitmagnet.args[2] | string | `"--all"` |  |
-| controllers.bitmagnet.containers.bitmagnet.env | list | `[{"name":"POSTGRES_HOST","value":"{{ .Release.Name }}-postgres"},{"name":"POSTGRES_NAME","value":"bitmagnet"},{"name":"POSTGRES_USER","valueFrom":{"secretKeyRef":{"key":"username","name":"{{ .Release.Name }}-postgres"}}},{"name":"POSTGRES_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"{{ .Release.Name }}-postgres"}}}]` | Environment variables. Template enabled. |
+| controllers.bitmagnet.containers.bitmagnet.env | list | `[{"name":"POSTGRES_HOST","value":"{{ .Release.Name }}-postgres"},{"name":"POSTGRES_NAME","value":"bitmagnet"},{"name":"POSTGRES_USER","valueFrom":{"secretKeyRef":{"key":"postgres-username","name":"{{ .Release.Name }}-secrets"}}},{"name":"POSTGRES_PASSWORD","valueFrom":{"secretKeyRef":{"key":"postgres-password","name":"{{ .Release.Name }}-secrets"}}},{"name":"TMDB_API_KEY","valueFrom":{"secretKeyRef":{"key":"tmdb-api-key","name":"{{ .Release.Name }}-secrets"}}}]` | Environment variables. Template enabled. |
 | controllers.bitmagnet.containers.bitmagnet.resources | object | `{}` | Set the resource requests / limits for the container. |
 | controllers.postgres.enabled | bool | `true` | enable the controller. |
 | controllers.postgres.type | string | `"statefulset"` | Set the controller type. Valid options are deployment, daemonset, statefulset, cronjob or job |
@@ -58,28 +58,28 @@ $ helm install bitmagnet brandan-schmitz/bitmagnet
 | controllers.postgres.strategy | string | `"OnDelete"` | Set the controller upgrade strategy |
 | controllers.postgres.statefulset | object | `{"volumeClaimTemplates":[{"accessMode":"ReadWriteOnce","annotations":{},"globalMounts":[{"path":"/var/lib/postgresql"}],"labels":{},"name":"data","size":"80Gi"}]}` | StatefulSet configuration. |
 | controllers.postgres.statefulset.volumeClaimTemplates | list | `[{"accessMode":"ReadWriteOnce","annotations":{},"globalMounts":[{"path":"/var/lib/postgresql"}],"labels":{},"name":"data","size":"80Gi"}]` | Used to create individual disks for each instance. |
-| controllers.postgres.containers.main.image.repository | string | `"postgres"` | image repository |
-| controllers.postgres.containers.main.image.tag | string | `"16-alpine"` | image tag |
-| controllers.postgres.containers.main.image.pullPolicy | string | `"IfNotPresent"` | image pull policy |
-| controllers.postgres.containers.main.env | list | `[{"name":"POSTGRES_HOST","value":"{{ .Release.Name }}-postgres"},{"name":"POSTGRES_DB","value":"bitmagnet"},{"name":"POSTGRES_USER","valueFrom":{"secretKeyRef":{"key":"username","name":"{{ .Release.Name }}-postgres"}}},{"name":"POSTGRES_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"{{ .Release.Name }}-postgres"}}}]` | Environment variables. Template enabled. |
-| controllers.postgres.containers.main.probes | object | `{"liveness":{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","pg_isready -U \"$PGUSER\" -d \"$POSTGRES_DB\" -h localhost\n"]},"failureThreshold":3,"initialDelaySeconds":60,"periodSeconds":30,"timeoutSeconds":5}},"readiness":{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","psql -U \"$PGUSER\" -d \"$POSTGRES_DB\" -c \"SELECT 1\"\n"]},"failureThreshold":3,"initialDelaySeconds":20,"periodSeconds":15,"timeoutSeconds":5}},"startup":{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","pg_isready -U \"$PGUSER\" -d \"$POSTGRES_DB\" -h localhost\n"]},"failureThreshold":12,"initialDelaySeconds":10,"periodSeconds":10,"timeoutSeconds":5}}}` | [[ref]](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) |
-| controllers.postgres.containers.main.probes.liveness | object | See below | Liveness probe configuration |
-| controllers.postgres.containers.main.probes.liveness.enabled | bool | `true` | Enable the liveness probe |
-| controllers.postgres.containers.main.probes.liveness.custom | bool | `true` | Set this to `true` if you wish to specify your own livenessProbe |
-| controllers.postgres.containers.main.probes.liveness.spec | object | See below | The spec field contains the values for the default livenessProbe. |
-| controllers.postgres.containers.main.probes.readiness | object | `{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","psql -U \"$PGUSER\" -d \"$POSTGRES_DB\" -c \"SELECT 1\"\n"]},"failureThreshold":3,"initialDelaySeconds":20,"periodSeconds":15,"timeoutSeconds":5}}` | Readiness probe configuration |
-| controllers.postgres.containers.main.probes.readiness.enabled | bool | `true` | Enable the readiness probe |
-| controllers.postgres.containers.main.probes.readiness.custom | bool | `true` | Set this to `true` if you wish to specify your own readinessProbe |
-| controllers.postgres.containers.main.probes.readiness.spec | object | See below | The spec field contains the values for the default readinessProbe. |
-| controllers.postgres.containers.main.probes.startup | object | `{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","pg_isready -U \"$PGUSER\" -d \"$POSTGRES_DB\" -h localhost\n"]},"failureThreshold":12,"initialDelaySeconds":10,"periodSeconds":10,"timeoutSeconds":5}}` | Startup probe configuration |
-| controllers.postgres.containers.main.probes.startup.enabled | bool | `true` | Enable the startup probe |
-| controllers.postgres.containers.main.probes.startup.custom | bool | `true` | Set this to `true` if you wish to specify your own startupProbe |
-| controllers.postgres.containers.main.probes.startup.spec | object | See below | The spec field contains the values for the default startupProbe. |
-| controllers.postgres.containers.main.resources | object | `{}` | Set the resource requests / limits for the container. |
+| controllers.postgres.containers.postgres.image.repository | string | `"postgres"` | image repository |
+| controllers.postgres.containers.postgres.image.tag | string | `"16-alpine"` | image tag |
+| controllers.postgres.containers.postgres.image.pullPolicy | string | `"IfNotPresent"` | image pull policy |
+| controllers.postgres.containers.postgres.env | list | `[{"name":"POSTGRES_HOST","value":"{{ .Release.Name }}-postgres"},{"name":"POSTGRES_DB","value":"bitmagnet"},{"name":"POSTGRES_USER","valueFrom":{"secretKeyRef":{"key":"postgres-username","name":"{{ .Release.Name }}-secrets"}}},{"name":"POSTGRES_PASSWORD","valueFrom":{"secretKeyRef":{"key":"postgres-password","name":"{{ .Release.Name }}-secrets"}}}]` | Environment variables. Template enabled. |
+| controllers.postgres.containers.postgres.probes | object | `{"liveness":{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","pg_isready -U \"$PGUSER\" -d \"$POSTGRES_DB\" -h localhost\n"]},"failureThreshold":3,"initialDelaySeconds":60,"periodSeconds":30,"timeoutSeconds":5}},"readiness":{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","psql -U \"$PGUSER\" -d \"$POSTGRES_DB\" -c \"SELECT 1\"\n"]},"failureThreshold":3,"initialDelaySeconds":20,"periodSeconds":15,"timeoutSeconds":5}},"startup":{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","pg_isready -U \"$PGUSER\" -d \"$POSTGRES_DB\" -h localhost\n"]},"failureThreshold":12,"initialDelaySeconds":10,"periodSeconds":10,"timeoutSeconds":5}}}` | [[ref]](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) |
+| controllers.postgres.containers.postgres.probes.liveness | object | See below | Liveness probe configuration |
+| controllers.postgres.containers.postgres.probes.liveness.enabled | bool | `true` | Enable the liveness probe |
+| controllers.postgres.containers.postgres.probes.liveness.custom | bool | `true` | Set this to `true` if you wish to specify your own livenessProbe |
+| controllers.postgres.containers.postgres.probes.liveness.spec | object | See below | The spec field contains the values for the default livenessProbe. |
+| controllers.postgres.containers.postgres.probes.readiness | object | `{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","psql -U \"$PGUSER\" -d \"$POSTGRES_DB\" -c \"SELECT 1\"\n"]},"failureThreshold":3,"initialDelaySeconds":20,"periodSeconds":15,"timeoutSeconds":5}}` | Readiness probe configuration |
+| controllers.postgres.containers.postgres.probes.readiness.enabled | bool | `true` | Enable the readiness probe |
+| controllers.postgres.containers.postgres.probes.readiness.custom | bool | `true` | Set this to `true` if you wish to specify your own readinessProbe |
+| controllers.postgres.containers.postgres.probes.readiness.spec | object | See below | The spec field contains the values for the default readinessProbe. |
+| controllers.postgres.containers.postgres.probes.startup | object | `{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","pg_isready -U \"$PGUSER\" -d \"$POSTGRES_DB\" -h localhost\n"]},"failureThreshold":12,"initialDelaySeconds":10,"periodSeconds":10,"timeoutSeconds":5}}` | Startup probe configuration |
+| controllers.postgres.containers.postgres.probes.startup.enabled | bool | `true` | Enable the startup probe |
+| controllers.postgres.containers.postgres.probes.startup.custom | bool | `true` | Set this to `true` if you wish to specify your own startupProbe |
+| controllers.postgres.containers.postgres.probes.startup.spec | object | See below | The spec field contains the values for the default startupProbe. |
+| controllers.postgres.containers.postgres.resources | object | `{}` | Set the resource requests / limits for the container. |
 | secrets | object | See below | Use this to populate secrets with the values you specify. Be aware that these values are not encrypted by default, and could therefore visible to anybody with access to the values.yaml file. |
-| secrets.postgres.enabled | bool | `true` | Enables or disables the Secret |
-| secrets.postgres.suffix | string | `"postgres"` | Sets the suffix of the secret otherwise it will just be the release name |
-| secrets.postgres.stringData | object | `{"password":"K8Y763jYxsFz","username":"postgres"}` | Secret stringData content. Helm template enabled. |
+| secrets.bitmagnet-secrets.enabled | bool | `true` | Enables or disables the Secret |
+| secrets.bitmagnet-secrets.suffix | string | `"secrets"` | Sets the suffix of the secret otherwise it will just be the release name |
+| secrets.bitmagnet-secrets.stringData | object | `{"postgres-password":"K8Y763jYxsFz","postgres-username":"postgres"}` | Secret stringData content. Helm template enabled. |
 | service | object | See below | Configure the services for the chart here. Additional services can be added by adding a dictionary key similar to the 'main' service. |
 | service.bitmagnet.enabled | bool | `true` | Enables or disables the service |
 | service.bitmagnet.controller | string | `"bitmagnet"` | Configure which controller this service should target |
