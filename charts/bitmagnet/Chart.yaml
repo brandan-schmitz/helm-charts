@@ -1,0 +1,19 @@
+apiVersion: v2
+name: bitmagnet
+description: A self-hosted BitTorrent indexer, DHT crawler, content classifier and torrent search engine with web UI, GraphQL API and Servarr stack integration.
+type: application
+kubeVersion: ">=1.28.0-0"
+maintainers:
+  - name: Brandan Schmitz
+    email: brandan.schmitz@celestialdata.net
+dependencies:
+  - name: common
+    version: 4.1.2
+    repository: https://bjw-s-labs.github.io/helm-charts/
+home: https://github.com/brandan-schmitz/helm-charts/tree/master/bitmagnet
+sources:
+  - https://github.com/bitmagnet-io/bitmagnet
+  - https://bitmagnet.io/
+icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/bitmagnet/icon.png
+version: 1.0.0
+appVersion: 0.10.0
