@@ -15,5 +15,5 @@ sources:
   - https://github.com/bitmagnet-io/bitmagnet
   - https://bitmagnet.io/
 icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/bitmagnet/icon.png
-version: 1.0.3
+version: 1.0.4
 appVersion: 0.10.0

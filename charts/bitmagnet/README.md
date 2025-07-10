@@ -1,6 +1,6 @@
 # bitmagnet
 
-![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.10.0](https://img.shields.io/badge/AppVersion-0.10.0-informational?style=flat-square)
+![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.10.0](https://img.shields.io/badge/AppVersion-0.10.0-informational?style=flat-square)
 
 A self-hosted BitTorrent indexer, DHT crawler, content classifier and torrent search engine with web UI, GraphQL API and Servarr stack integration.
 
@@ -51,6 +51,22 @@ $ helm install bitmagnet brandan-schmitz/bitmagnet
 | controllers.bitmagnet.containers.bitmagnet.args[1] | string | `"run"` |  |
 | controllers.bitmagnet.containers.bitmagnet.args[2] | string | `"--all"` |  |
 | controllers.bitmagnet.containers.bitmagnet.env | list | `[{"name":"POSTGRES_HOST","value":"{{ .Release.Name }}-postgres"},{"name":"POSTGRES_NAME","value":"bitmagnet"},{"name":"POSTGRES_USER","valueFrom":{"secretKeyRef":{"key":"postgres-username","name":"{{ .Release.Name }}-secrets"}}},{"name":"POSTGRES_PASSWORD","valueFrom":{"secretKeyRef":{"key":"postgres-password","name":"{{ .Release.Name }}-secrets"}}},{"name":"TMDB_API_KEY","valueFrom":{"secretKeyRef":{"key":"tmdb-api-key","name":"{{ .Release.Name }}-secrets"}}}]` | Environment variables. Template enabled. |
+| controllers.bitmagnet.containers.bitmagnet.probes | object | `{"liveness":{"custom":false,"enabled":true,"spec":{"failureThreshold":3,"initialDelaySeconds":0,"periodSeconds":10,"timeoutSeconds":1},"type":"TCP"},"readiness":{"custom":false,"enabled":true,"spec":{"failureThreshold":3,"initialDelaySeconds":0,"periodSeconds":10,"timeoutSeconds":1},"type":"TCP"},"startup":{"custom":false,"enabled":true,"spec":{"failureThreshold":30,"initialDelaySeconds":0,"periodSeconds":5,"timeoutSeconds":1},"type":"TCP"}}` | [[ref]](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) |
+| controllers.bitmagnet.containers.bitmagnet.probes.liveness | object | See below | Liveness probe configuration |
+| controllers.bitmagnet.containers.bitmagnet.probes.liveness.enabled | bool | `true` | Enable the liveness probe |
+| controllers.bitmagnet.containers.bitmagnet.probes.liveness.custom | bool | `false` | Set this to `true` if you wish to specify your own livenessProbe |
+| controllers.bitmagnet.containers.bitmagnet.probes.liveness.type | string | "TCP" | sets the probe type when not using a custom probe |
+| controllers.bitmagnet.containers.bitmagnet.probes.liveness.spec | object | See below | The spec field contains the values for the default livenessProbe. If you selected `custom: true`, this field holds the definition of the livenessProbe. |
+| controllers.bitmagnet.containers.bitmagnet.probes.readiness | object | `{"custom":false,"enabled":true,"spec":{"failureThreshold":3,"initialDelaySeconds":0,"periodSeconds":10,"timeoutSeconds":1},"type":"TCP"}` | Readiness probe configuration |
+| controllers.bitmagnet.containers.bitmagnet.probes.readiness.enabled | bool | `true` | Enable the readiness probe |
+| controllers.bitmagnet.containers.bitmagnet.probes.readiness.custom | bool | `false` | Set this to `true` if you wish to specify your own readinessProbe |
+| controllers.bitmagnet.containers.bitmagnet.probes.readiness.type | string | "TCP" | sets the probe type when not using a custom probe |
+| controllers.bitmagnet.containers.bitmagnet.probes.readiness.spec | object | See below | The spec field contains the values for the default readinessProbe. If you selected `custom: true`, this field holds the definition of the readinessProbe. |
+| controllers.bitmagnet.containers.bitmagnet.probes.startup | object | `{"custom":false,"enabled":true,"spec":{"failureThreshold":30,"initialDelaySeconds":0,"periodSeconds":5,"timeoutSeconds":1},"type":"TCP"}` | Startup probe configuration |
+| controllers.bitmagnet.containers.bitmagnet.probes.startup.enabled | bool | `true` | Enable the startup probe |
+| controllers.bitmagnet.containers.bitmagnet.probes.startup.custom | bool | `false` | Set this to `true` if you wish to specify your own startupProbe |
+| controllers.bitmagnet.containers.bitmagnet.probes.startup.type | string | "TCP" | sets the probe type when not using a custom probe |
+| controllers.bitmagnet.containers.bitmagnet.probes.startup.spec | object | See below | The spec field contains the values for the default startupProbe. If you selected `custom: true`, this field holds the definition of the startupProbe. |
 | controllers.bitmagnet.containers.bitmagnet.resources | object | `{}` | Set the resource requests / limits for the container. |
 | controllers.postgres.enabled | bool | `true` | enable the controller. |
 | controllers.postgres.type | string | `"statefulset"` | Set the controller type. Valid options are deployment, daemonset, statefulset, cronjob or job |
@@ -62,16 +78,16 @@ $ helm install bitmagnet brandan-schmitz/bitmagnet
 | controllers.postgres.containers.postgres.image.tag | string | `"16-alpine"` | image tag |
 | controllers.postgres.containers.postgres.image.pullPolicy | string | `"IfNotPresent"` | image pull policy |
 | controllers.postgres.containers.postgres.env | list | `[{"name":"POSTGRES_HOST","value":"{{ .Release.Name }}-postgres"},{"name":"POSTGRES_DB","value":"bitmagnet"},{"name":"POSTGRES_USER","valueFrom":{"secretKeyRef":{"key":"postgres-username","name":"{{ .Release.Name }}-secrets"}}},{"name":"POSTGRES_PASSWORD","valueFrom":{"secretKeyRef":{"key":"postgres-password","name":"{{ .Release.Name }}-secrets"}}}]` | Environment variables. Template enabled. |
-| controllers.postgres.containers.postgres.probes | object | `{"liveness":{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","pg_isready -U \"$PGUSER\" -d \"$POSTGRES_DB\" -h localhost\n"]},"failureThreshold":3,"initialDelaySeconds":60,"periodSeconds":30,"timeoutSeconds":5}},"readiness":{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","psql -U \"$PGUSER\" -d \"$POSTGRES_DB\" -c \"SELECT 1\"\n"]},"failureThreshold":3,"initialDelaySeconds":20,"periodSeconds":15,"timeoutSeconds":5}},"startup":{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","pg_isready -U \"$PGUSER\" -d \"$POSTGRES_DB\" -h localhost\n"]},"failureThreshold":12,"initialDelaySeconds":10,"periodSeconds":10,"timeoutSeconds":5}}}` | [[ref]](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) |
+| controllers.postgres.containers.postgres.probes | object | `{"liveness":{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","pg_isready -U \"$POSTGRES_USER\" -d \"$POSTGRES_DB\" -h localhost\n"]},"failureThreshold":3,"initialDelaySeconds":60,"periodSeconds":30,"timeoutSeconds":5}},"readiness":{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","psql -U \"$POSTGRES_USER\" -d \"$POSTGRES_DB\" -c \"SELECT 1\"\n"]},"failureThreshold":3,"initialDelaySeconds":20,"periodSeconds":15,"timeoutSeconds":5}},"startup":{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","pg_isready -U \"$POSTGRES_USER\" -d \"$POSTGRES_DB\" -h localhost\n"]},"failureThreshold":12,"initialDelaySeconds":10,"periodSeconds":10,"timeoutSeconds":5}}}` | [[ref]](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) |
 | controllers.postgres.containers.postgres.probes.liveness | object | See below | Liveness probe configuration |
 | controllers.postgres.containers.postgres.probes.liveness.enabled | bool | `true` | Enable the liveness probe |
 | controllers.postgres.containers.postgres.probes.liveness.custom | bool | `true` | Set this to `true` if you wish to specify your own livenessProbe |
 | controllers.postgres.containers.postgres.probes.liveness.spec | object | See below | The spec field contains the values for the default livenessProbe. |
-| controllers.postgres.containers.postgres.probes.readiness | object | `{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","psql -U \"$PGUSER\" -d \"$POSTGRES_DB\" -c \"SELECT 1\"\n"]},"failureThreshold":3,"initialDelaySeconds":20,"periodSeconds":15,"timeoutSeconds":5}}` | Readiness probe configuration |
+| controllers.postgres.containers.postgres.probes.readiness | object | `{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","psql -U \"$POSTGRES_USER\" -d \"$POSTGRES_DB\" -c \"SELECT 1\"\n"]},"failureThreshold":3,"initialDelaySeconds":20,"periodSeconds":15,"timeoutSeconds":5}}` | Readiness probe configuration |
 | controllers.postgres.containers.postgres.probes.readiness.enabled | bool | `true` | Enable the readiness probe |
 | controllers.postgres.containers.postgres.probes.readiness.custom | bool | `true` | Set this to `true` if you wish to specify your own readinessProbe |
 | controllers.postgres.containers.postgres.probes.readiness.spec | object | See below | The spec field contains the values for the default readinessProbe. |
-| controllers.postgres.containers.postgres.probes.startup | object | `{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","pg_isready -U \"$PGUSER\" -d \"$POSTGRES_DB\" -h localhost\n"]},"failureThreshold":12,"initialDelaySeconds":10,"periodSeconds":10,"timeoutSeconds":5}}` | Startup probe configuration |
+| controllers.postgres.containers.postgres.probes.startup | object | `{"custom":true,"enabled":true,"spec":{"exec":{"command":["sh","-c","pg_isready -U \"$POSTGRES_USER\" -d \"$POSTGRES_DB\" -h localhost\n"]},"failureThreshold":12,"initialDelaySeconds":10,"periodSeconds":10,"timeoutSeconds":5}}` | Startup probe configuration |
 | controllers.postgres.containers.postgres.probes.startup.enabled | bool | `true` | Enable the startup probe |
 | controllers.postgres.containers.postgres.probes.startup.custom | bool | `true` | Set this to `true` if you wish to specify your own startupProbe |
 | controllers.postgres.containers.postgres.probes.startup.spec | object | See below | The spec field contains the values for the default startupProbe. |
@@ -113,7 +129,7 @@ $ helm install bitmagnet brandan-schmitz/bitmagnet
 | service.postgres.ports.postgres.enabled | bool | `true` | Enables or disables the port |
 | service.postgres.ports.postgres.primary | bool | `true` | Make this the primary port |
 | service.postgres.ports.postgres.port | int | `5432` | The port number |
-| service.postgres.ports.postgres.protocol | string | `"HTTP"` | Port protocol. Support values are `HTTP`, `HTTPS`, `TCP` and `UDP`. HTTP and HTTPS spawn a TCP service and get used for internal URL and name generation |
+| service.postgres.ports.postgres.protocol | string | `"TCP"` | Port protocol. Support values are `HTTP`, `HTTPS`, `TCP` and `UDP`. HTTP and HTTPS spawn a TCP service and get used for internal URL and name generation |
 | ingress | object | `{}` | Configure the ingresses for the chart here. |
 | persistence | object | See below | Configure persistence for the chart here. Additional items can be added by adding a dictionary key similar to the 'config' key. [[ref]](https://bjw-s-labs.github.io/helm-charts/docs/common-library/common-library-storage) |
 | persistence.bitmagnet-config.enabled | bool | `true` | Enables or disables the persistence item. Defaults to true |
