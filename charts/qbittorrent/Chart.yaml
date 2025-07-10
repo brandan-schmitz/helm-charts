@@ -14,5 +14,5 @@ home: https://github.com/brandan-schmitz/helm-charts/tree/master/qbittorrent
 sources:
   - https://github.com/linuxserver/docker-qbittorrent
 icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/qbittorrent/icon.png
-version: 2.1.1
-appVersion: 5.1.0
+version: 2.1.2
+appVersion: 5.1.2

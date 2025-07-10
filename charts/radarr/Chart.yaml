@@ -15,5 +15,5 @@ sources:
   - https://github.com/linuxserver/docker-radarr
   - https://github.com/Radarr/Radarr
 icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/radarr/icon.png
-version: 2.9.0
-appVersion: 5.23.3.9987
+version: 2.10.0
+appVersion: 5.26.2.10099
