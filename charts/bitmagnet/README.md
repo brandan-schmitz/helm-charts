@@ -1,6 +1,6 @@
 # bitmagnet
 
-![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.10.0](https://img.shields.io/badge/AppVersion-0.10.0-informational?style=flat-square)
+![Version: 1.0.5](https://img.shields.io/badge/Version-1.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.10.0](https://img.shields.io/badge/AppVersion-0.10.0-informational?style=flat-square)
 
 A self-hosted BitTorrent indexer, DHT crawler, content classifier and torrent search engine with web UI, GraphQL API and Servarr stack integration.
 
@@ -72,8 +72,8 @@ $ helm install bitmagnet brandan-schmitz/bitmagnet
 | controllers.postgres.type | string | `"statefulset"` | Set the controller type. Valid options are deployment, daemonset, statefulset, cronjob or job |
 | controllers.postgres.replicas | int | `1` | Number of desired pods. When using a HorizontalPodAutoscaler, set this to `null`. |
 | controllers.postgres.strategy | string | `"OnDelete"` | Set the controller upgrade strategy |
-| controllers.postgres.statefulset | object | `{"volumeClaimTemplates":[{"accessMode":"ReadWriteOnce","annotations":{},"globalMounts":[{"path":"/var/lib/postgresql"}],"labels":{},"name":"data","size":"80Gi"}]}` | StatefulSet configuration. |
-| controllers.postgres.statefulset.volumeClaimTemplates | list | `[{"accessMode":"ReadWriteOnce","annotations":{},"globalMounts":[{"path":"/var/lib/postgresql"}],"labels":{},"name":"data","size":"80Gi"}]` | Used to create individual disks for each instance. |
+| controllers.postgres.statefulset | object | `{"volumeClaimTemplates":[{"accessMode":"ReadWriteOnce","annotations":{},"globalMounts":[{"path":"/var/lib/postgresql/data"}],"labels":{},"name":"data","size":"80Gi"}]}` | StatefulSet configuration. |
+| controllers.postgres.statefulset.volumeClaimTemplates | list | `[{"accessMode":"ReadWriteOnce","annotations":{},"globalMounts":[{"path":"/var/lib/postgresql/data"}],"labels":{},"name":"data","size":"80Gi"}]` | Used to create individual disks for each instance. |
 | controllers.postgres.containers.postgres.image.repository | string | `"postgres"` | image repository |
 | controllers.postgres.containers.postgres.image.tag | string | `"16-alpine"` | image tag |
 | controllers.postgres.containers.postgres.image.pullPolicy | string | `"IfNotPresent"` | image pull policy |

@@ -156,7 +156,7 @@ controllers:
         labels: {}
         annotations: {}
         globalMounts:
-          - path: /var/lib/postgresql
+          - path: /var/lib/postgresql/data
         accessMode: "ReadWriteOnce"
         size: 80Gi
         # -- If set to `-`, dynamic provisioning is disabled.
