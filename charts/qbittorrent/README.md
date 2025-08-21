@@ -1,6 +1,6 @@
 # qbittorrent
 
-![Version: 2.1.2](https://img.shields.io/badge/Version-2.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.1.2](https://img.shields.io/badge/AppVersion-5.1.2-informational?style=flat-square)
+![Version: 2.1.3](https://img.shields.io/badge/Version-2.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.1.2](https://img.shields.io/badge/AppVersion-5.1.2-informational?style=flat-square)
 
 The Qbittorrent project aims to provide an open-source software alternative to ÂµTorrent. qBittorrent is based on the Qt toolkit and libtorrent-rasterbar library.
 
@@ -9,6 +9,7 @@ The Qbittorrent project aims to provide an open-source software alternative to Â
 ## Source Code
 
 * <https://github.com/linuxserver/docker-qbittorrent>
+* <https://github.com/qbittorrent/qBittorrent>
 
 <br>
 

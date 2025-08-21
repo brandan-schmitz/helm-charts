@@ -15,5 +15,5 @@ sources:
   - https://github.com/filebrowser/filebrowser
   - https://filebrowser.org
 icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/filebrowser/icon.png
-version: 1.1.0
-appVersion: 2.37.0
+version: 1.2.0
+appVersion: 2.42.5

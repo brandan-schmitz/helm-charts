@@ -13,6 +13,7 @@ dependencies:
 home: https://github.com/brandan-schmitz/helm-charts/tree/master/qbittorrent
 sources:
   - https://github.com/linuxserver/docker-qbittorrent
+  - https://github.com/qbittorrent/qBittorrent
 icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/qbittorrent/icon.png
-version: 2.1.2
+version: 2.1.3
 appVersion: 5.1.2

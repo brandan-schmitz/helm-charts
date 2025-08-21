@@ -1,6 +1,6 @@
 # plex
 
-![Version: 1.3.4](https://img.shields.io/badge/Version-1.3.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.41.8](https://img.shields.io/badge/AppVersion-1.41.8-informational?style=flat-square)
+![Version: 1.4.0](https://img.shields.io/badge/Version-1.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.42.1](https://img.shields.io/badge/AppVersion-1.42.1-informational?style=flat-square)
 
 Plex organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone Plex Media Server. has always been a top priority. Straightforward design and bulk actions mean getting things done faster.
 
@@ -9,6 +9,7 @@ Plex organizes video, music and photos from personal media libraries and streams
 ## Source Code
 
 * <https://github.com/linuxserver/docker-plex>
+* <https://hub.docker.com/r/linuxserver/plex>
 * <https://plex.tv>
 
 <br>
