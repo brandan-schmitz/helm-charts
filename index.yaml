@@ -2,6 +2,31 @@ apiVersion: v1
 entries:
   Filebrowser:
   - apiVersion: v2
+    appVersion: 2.42.5
+    created: "2025-08-21T04:07:50.030329191Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 4.0.1
+    description: File Browser is a create-your-own-cloud-kind of software where you
+      can install it on a server, direct it to a path and then access your files through
+      a nice web interface.
+    digest: 8064474f6e8b9cada339b155ae6ff4a5a131c4412c662f6fd0bd0b15bfb5a9db
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/filebrowser
+    icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/filebrowser/icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: Filebrowser
+    sources:
+    - https://github.com/filebrowser/filebrowser
+    - https://filebrowser.org
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/Filebrowser-1.2.0/Filebrowser-1.2.0.tgz
+    version: 1.2.0
+  - apiVersion: v2
     appVersion: 2.37.0
     created: "2025-07-10T01:43:30.97400614Z"
     dependencies:
@@ -863,6 +888,33 @@ entries:
     version: 1.2.2
   plex:
   - apiVersion: v2
+    appVersion: 1.42.1
+    created: "2025-08-21T04:07:51.088976478Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 1.5.1
+    description: Plex organizes video, music and photos from personal media libraries
+      and streams them to smart TVs, streaming boxes and mobile devices. This container
+      is packaged as a standalone Plex Media Server. has always been a top priority.
+      Straightforward design and bulk actions mean getting things done faster.
+    digest: 95bf33add536679305bff696b3f449e3bea1741a183ab1a0ae6941f37a46636c
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/plex
+    icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/plex/icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: plex
+    sources:
+    - https://github.com/linuxserver/docker-plex
+    - https://hub.docker.com/r/linuxserver/plex
+    - https://plex.tv
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/plex-1.4.0/plex-1.4.0.tgz
+    version: 1.4.0
+  - apiVersion: v2
     appVersion: 1.41.8
     created: "2025-07-10T01:43:31.848692644Z"
     dependencies:
@@ -1379,6 +1431,31 @@ entries:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/prowlarr-1.5.0/prowlarr-1.5.0.tgz
     version: 1.5.0
   qbittorrent:
+  - apiVersion: v2
+    appVersion: 5.1.2
+    created: "2025-08-21T04:07:51.396144582Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 1.5.1
+    description: The Qbittorrent project aims to provide an open-source software alternative
+      to µTorrent. qBittorrent is based on the Qt toolkit and libtorrent-rasterbar
+      library.
+    digest: 4b493de3e4a843b6ca0501123a5db51adb0895efc7cc96ae8ff15faccb1fb2f5
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/qbittorrent
+    icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/qbittorrent/icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: qbittorrent
+    sources:
+    - https://github.com/linuxserver/docker-qbittorrent
+    - https://github.com/qbittorrent/qBittorrent
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/qbittorrent-2.1.3/qbittorrent-2.1.3.tgz
+    version: 2.1.3
   - apiVersion: v2
     appVersion: 5.1.2
     created: "2025-07-10T01:43:32.112592225Z"
@@ -2329,6 +2406,31 @@ entries:
     version: 1.1.1
   syncthing:
   - apiVersion: v2
+    appVersion: 2.0.2
+    created: "2025-08-21T04:07:51.969341276Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 4.0.1
+    description: Syncthing is a continuous file synchronization program. It synchronizes
+      files between two or more computers in real time, safely protected from prying
+      eyes.
+    digest: 5393a17ec43ac7224cabdf6cd6091825a877bd6463b8931ba4eb5f590aed0f6b
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/syncthing
+    icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/syncthing/icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: syncthing
+    sources:
+    - https://github.com/syncthing/syncthing
+    - https://syncthing.net/
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/syncthing-2.0.0/syncthing-2.0.0.tgz
+    version: 2.0.0
+  - apiVersion: v2
     appVersion: 1.30.0
     created: "2025-07-10T01:43:32.55230506Z"
     dependencies:
@@ -2453,4 +2555,4 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/syncthing-1.0.0/syncthing-1.0.0.tgz
     version: 1.0.0
-generated: "2025-07-10T01:43:32.552554931Z"
+generated: "2025-08-21T04:07:51.969536802Z"
