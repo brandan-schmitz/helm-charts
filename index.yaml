@@ -936,6 +936,33 @@ entries:
     version: 1.2.2
   plex:
   - apiVersion: v2
+    appVersion: 1.42.2
+    created: "2025-12-26T21:06:36.30416641Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 1.5.1
+    description: Plex organizes video, music and photos from personal media libraries
+      and streams them to smart TVs, streaming boxes and mobile devices. This container
+      is packaged as a standalone Plex Media Server. has always been a top priority.
+      Straightforward design and bulk actions mean getting things done faster.
+    digest: 4f9bc485585c0e5d6b40fcba2bc9edb680dded371b9df8c0e727b33a4f0498e7
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/plex
+    icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/plex/icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: plex
+    sources:
+    - https://github.com/linuxserver/docker-plex
+    - https://hub.docker.com/r/linuxserver/plex
+    - https://plex.tv
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/plex-1.4.1/plex-1.4.1.tgz
+    version: 1.4.1
+  - apiVersion: v2
     appVersion: 1.42.1
     created: "2025-08-21T04:07:51.088976478Z"
     dependencies:
@@ -2603,4 +2630,4 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/syncthing-1.0.0/syncthing-1.0.0.tgz
     version: 1.0.0
-generated: "2025-08-21T05:08:03.467317773Z"
+generated: "2025-12-26T21:06:38.339509961Z"
