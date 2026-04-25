@@ -15,5 +15,5 @@ sources:
   - https://github.com/linuxserver/docker-sonarr
   - https://github.com/Sonarr/Sonarr
 icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/sonarr/icon.png
-version: 2.0.9
-appVersion: 4.0.15.2941
+version: 2.0.10
+appVersion: 4.0.17.2952
