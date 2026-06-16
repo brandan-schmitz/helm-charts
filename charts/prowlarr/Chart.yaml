@@ -15,5 +15,5 @@ sources:
   - https://github.com/linuxserver/docker-prowlarr
   - https://github.com/Prowlarr/Prowlarr
 icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/prowlarr/icon.png
-version: 2.0.0
-appVersion: 2.3.5.5327
+version: 2.1.0
+appVersion: 2.4.0.5397
