@@ -520,6 +520,30 @@ entries:
     version: 1.0.0
   blackhole-manager:
   - apiVersion: v2
+    appVersion: v2.0.0
+    created: "2026-06-16T06:30:25.576458057Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 1.5.1
+    description: Blackhole Manager coordinates the downloading of magnet and torrent
+      files send to a blackhole folder from Sonarr and Radarr from real-debrid through
+      the Aria2 download program.
+    digest: efc72c2bbe89c95abca12e8659e165a1aff8b79e40fa617421cb8b64c5ede673
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/blackhole-manager
+    icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/blackhole-manager/icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: blackhole-manager
+    sources:
+    - https://github.com/brandan-schmitz/blackhole-manager
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/blackhole-manager-2.0.0/blackhole-manager-2.0.0.tgz
+    version: 2.0.0
+  - apiVersion: v2
     appVersion: v1.1.3
     created: "2026-06-16T06:27:06.546198742Z"
     dependencies:
@@ -3024,4 +3048,4 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/syncthing-1.0.0/syncthing-1.0.0.tgz
     version: 1.0.0
-generated: "2026-06-16T06:27:08.252332322Z"
+generated: "2026-06-16T06:30:27.314362772Z"
