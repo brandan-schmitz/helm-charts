@@ -2,6 +2,31 @@ apiVersion: v1
 entries:
   Filebrowser:
   - apiVersion: v2
+    appVersion: 2.63.15
+    created: "2026-06-16T06:27:05.976039307Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 4.0.1
+    description: File Browser is a create-your-own-cloud-kind of software where you
+      can install it on a server, direct it to a path and then access your files through
+      a nice web interface.
+    digest: ee62bb2121ddf23320f0498b6e006441d03db81ecf0e1a5b99fa062baa41ff2b
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/filebrowser
+    icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/filebrowser/icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: Filebrowser
+    sources:
+    - https://github.com/filebrowser/filebrowser
+    - https://filebrowser.org
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/Filebrowser-1.3.1/Filebrowser-1.3.1.tgz
+    version: 1.3.1
+  - apiVersion: v2
     appVersion: 2.63.2
     created: "2026-04-25T03:37:12.469595292Z"
     dependencies:
@@ -495,6 +520,30 @@ entries:
     version: 1.0.0
   blackhole-manager:
   - apiVersion: v2
+    appVersion: v1.1.3
+    created: "2026-06-16T06:27:06.546198742Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 1.5.1
+    description: Blackhole Manager coordinates the downloading of magnet and torrent
+      files send to a blackhole folder from Sonarr and Radarr from real-debrid through
+      the Aria2 download program.
+    digest: 1f4853f68f0a07b32207c39d48749fbed08b3217ae9a2a1e7f73afc2953eabe9
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/blackhole-manager
+    icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/blackhole-manager/icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: blackhole-manager
+    sources:
+    - https://github.com/brandan-schmitz/blackhole-manager
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/blackhole-manager-1.3.4/blackhole-manager-1.3.4.tgz
+    version: 1.3.4
+  - apiVersion: v2
     appVersion: v1.1.2
     created: "2025-05-26T01:14:22.901302025Z"
     dependencies:
@@ -633,6 +682,29 @@ entries:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/env-injector-webhook-1.0.0/env-injector-webhook-1.0.0.tgz
     version: 1.0.0
   flaresolverr:
+  - apiVersion: v2
+    appVersion: 3.5.0
+    created: "2026-06-16T06:27:06.87441507Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 1.5.1
+    description: FlareSolverr is a proxy server to bypass Cloudflare and DDoS-GUARD
+      protection.
+    digest: 36e012e6f08118a7bd9bf1850f65fa4a151aa085a1dfea4d444f918b2275e1d9
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/flaresolverr
+    icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/flaresolverr/icon.svg
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: flaresolverr
+    sources:
+    - https://github.com/FlareSolverr/FlareSolverr
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/flaresolverr-1.4.0/flaresolverr-1.4.0.tgz
+    version: 1.4.0
   - apiVersion: v2
     appVersion: 3.4.6
     created: "2026-04-25T03:37:13.331263435Z"
@@ -1008,6 +1080,33 @@ entries:
     version: 1.2.2
   plex:
   - apiVersion: v2
+    appVersion: 1.43.2
+    created: "2026-06-16T06:27:07.211699826Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 1.5.1
+    description: Plex organizes video, music and photos from personal media libraries
+      and streams them to smart TVs, streaming boxes and mobile devices. This container
+      is packaged as a standalone Plex Media Server. has always been a top priority.
+      Straightforward design and bulk actions mean getting things done faster.
+    digest: 24c29db1d9d36229bd1baf48a8c357b00d36a28f4ccdcab28c3b40e6e733f07b
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/plex
+    icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/plex/icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: plex
+    sources:
+    - https://github.com/linuxserver/docker-plex
+    - https://hub.docker.com/r/linuxserver/plex
+    - https://plex.tv
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/plex-1.5.1/plex-1.5.1.tgz
+    version: 1.5.1
+  - apiVersion: v2
     appVersion: 1.43.1
     created: "2026-04-25T03:37:13.655980826Z"
     dependencies:
@@ -1350,6 +1449,30 @@ entries:
     version: 1.1.4
   prowlarr:
   - apiVersion: v2
+    appVersion: 2.4.0.5397
+    created: "2026-06-16T06:27:07.382499999Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 1.5.1
+    description: Prowlarr is a indexer manager/proxy built on the popular arr .net/reactjs
+      base stack to integrate with your various PVR apps.
+    digest: f63a7d3f7b6f5938aab5dc72172c82307732cfb8035ba67e51404a487f3e1adc
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/prowlarr
+    icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/prowlarr/icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: prowlarr
+    sources:
+    - https://github.com/linuxserver/docker-prowlarr
+    - https://github.com/Prowlarr/Prowlarr
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/prowlarr-2.1.0/prowlarr-2.1.0.tgz
+    version: 2.1.0
+  - apiVersion: v2
     appVersion: 2.3.5.5327
     created: "2026-04-25T03:37:13.805764229Z"
     dependencies:
@@ -1630,6 +1753,31 @@ entries:
     version: 1.5.0
   qbittorrent:
   - apiVersion: v2
+    appVersion: 5.2.2
+    created: "2026-06-16T06:27:07.595307745Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 1.5.1
+    description: The Qbittorrent project aims to provide an open-source software alternative
+      to µTorrent. qBittorrent is based on the Qt toolkit and libtorrent-rasterbar
+      library.
+    digest: 7ee65b9bc7addcc0029f3d578c6a94e12b51c697a94762c967630ffe30b1d94f
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/qbittorrent
+    icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/qbittorrent/icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: qbittorrent
+    sources:
+    - https://github.com/linuxserver/docker-qbittorrent
+    - https://github.com/qbittorrent/qBittorrent
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/qbittorrent-2.2.0/qbittorrent-2.2.0.tgz
+    version: 2.2.0
+  - apiVersion: v2
     appVersion: 5.1.4
     created: "2026-04-25T03:37:13.991886982Z"
     dependencies:
@@ -1896,6 +2044,29 @@ entries:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/qbittorrent-1.0.0/qbittorrent-1.0.0.tgz
     version: 1.0.0
   radarr:
+  - apiVersion: v2
+    appVersion: 6.2.1.10461
+    created: "2026-06-16T06:27:07.763322049Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 1.5.1
+    description: A fork of Sonarr to work with movies à la Couchpotato.
+    digest: 4546253832805127ceea52656243b13dd4fd594c697d722f07dcffdb589c150d
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/radarr
+    icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/radarr/icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: radarr
+    sources:
+    - https://github.com/linuxserver/docker-radarr
+    - https://github.com/Radarr/Radarr
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/radarr-3.1.0/radarr-3.1.0.tgz
+    version: 3.1.0
   - apiVersion: v2
     appVersion: 6.1.1.10360
     created: "2026-04-25T03:37:14.150759707Z"
@@ -2679,6 +2850,31 @@ entries:
     version: 1.1.1
   syncthing:
   - apiVersion: v2
+    appVersion: 2.1.1
+    created: "2026-06-16T06:27:08.251988916Z"
+    dependencies:
+    - name: common
+      repository: https://bjw-s-labs.github.io/helm-charts/
+      version: 4.0.1
+    description: Syncthing is a continuous file synchronization program. It synchronizes
+      files between two or more computers in real time, safely protected from prying
+      eyes.
+    digest: ace016c296e1c6828087e6283eaf393997711290f733cf862055d7e7704191d8
+    home: https://github.com/brandan-schmitz/helm-charts/tree/master/syncthing
+    icon: https://raw.githubusercontent.com/brandan-schmitz/helm-charts/master/charts/syncthing/icon.png
+    kubeVersion: '>=1.24.0-0'
+    maintainers:
+    - email: brandan.schmitz@celestialdata.net
+      name: Brandan Schmitz
+    name: syncthing
+    sources:
+    - https://github.com/syncthing/syncthing
+    - https://syncthing.net/
+    type: application
+    urls:
+    - https://github.com/brandan-schmitz/helm-charts/releases/download/syncthing-2.1.0/syncthing-2.1.0.tgz
+    version: 2.1.0
+  - apiVersion: v2
     appVersion: 2.0.2
     created: "2025-08-21T04:07:51.969341276Z"
     dependencies:
@@ -2828,4 +3024,4 @@ entries:
     urls:
     - https://github.com/brandan-schmitz/helm-charts/releases/download/syncthing-1.0.0/syncthing-1.0.0.tgz
     version: 1.0.0
-generated: "2026-04-25T03:37:14.664788284Z"
+generated: "2026-06-16T06:27:08.252332322Z"
