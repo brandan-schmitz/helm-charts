@@ -1,6 +1,6 @@
 # blackhole-manager
 
-![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v2.0.0](https://img.shields.io/badge/AppVersion-v2.0.0-informational?style=flat-square)
+![Version: 3.0.0](https://img.shields.io/badge/Version-3.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v3.0.0](https://img.shields.io/badge/AppVersion-v3.0.0-informational?style=flat-square)
 
 Blackhole Manager coordinates the downloading of magnet and torrent files send to a blackhole folder from Sonarr and Radarr from real-debrid through the Aria2 download program.
 
