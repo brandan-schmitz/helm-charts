@@ -222,12 +222,21 @@ secrets:
           #  - OFF
           logLevel: INFO
 
+          # Choose which Debrid service to use for downloading content. Valid options are:
+          # - real-debrid
+          # - torbox
+          debridService: torbox
+
           # Private API key for real-debrid which is where the movies get downloaded from
           # In order to get an API key, you will need to register an account at https://real-debrid.com
           # and purchase a premium offer. Generally the 180 day plan is the best deal. Once purchased, go
           # to https://real-debrid.com/apitoken to retrieve your token. You will need to purchase more time
           # before your plan expires otherwise the bot will not function.
           realDebridKey: somerandomeapikeygoeshereotherwiseitwontwork
+
+          # API key for Torbox that allows the application to manage torrents and download files from
+          # Torbox application. A paid plan that allows access to the API on Torbox is required.
+          torboxKey: somerandomeapikeygoeshereotherwiseitwontwork
 
 
         #########################
@@ -265,8 +274,8 @@ secrets:
         ######################
         AriaSettings:
           # The protocol (http/https), IP/DNS address, and port number of the Aria2 server.
-          # Example address: http://127.0.0.1:8080/jsonrpc
-          address: "http://127.0.0.1:8080/jsonrpc"
+          # Example address: http://127.0.0.1:8080
+          address: "http://127.0.0.1:8080"
 
           # The access token used in the JSONRPC requests.
           accessToken: ""
